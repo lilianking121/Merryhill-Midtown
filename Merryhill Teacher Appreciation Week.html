@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<!-- saved from url=(0063)file:///Users/lking/Downloads/merryhill-appreciation-app_5.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Merryhill Teacher Appreciation Week</title>
+<link href="./Merryhill Teacher Appreciation Week_files/css2" rel="stylesheet">
+<script src="./Merryhill Teacher Appreciation Week_files/xlsx.full.min.js"></script>
+<style>
+  :root {
+    --space: #1a1a2e;
+    --space-mid: #16213e;
+    --nebula: #0f3460;
+    --star: #e94560;
+    --gold: #f5a623;
+    --gold-light: #fdf3e0;
+    --aqua: #53d8fb;
+    --aqua-pale: #e8f9fd;
+    --cream: #f8f6ff;
+    --text: #1a1a2e;
+    --text-mid: #4a4a6a;
+    --text-light: #9090b0;
+    --cloud: #ebebf5;
+    --shadow: rgba(26,26,46,0.12);
+    --green: #27ae60;
+    --green-pale: #e8f8ee;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text); min-height: 100vh; }
+
+  /* HEADER */
+  header {
+    background: linear-gradient(135deg, var(--space) 0%, var(--nebula) 100%);
+    color: white; position: relative; overflow: hidden;
+  }
+  .stars { position: absolute; inset: 0; pointer-events: none; }
+  .star-dot { position: absolute; border-radius: 50%; background: white; animation: twinkle 3s infinite; }
+  @keyframes twinkle { 0%,100%{opacity:0.3} 50%{opacity:1} }
+  .header-inner { display: flex; align-items: center; gap: 20px; padding: 24px 32px; position: relative; z-index: 1; }
+  .school-logo { width: 60px; height: 60px; border-radius: 50%; background: rgba(255,255,255,0.12); border: 2px solid rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0; }
+  .header-text h1 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; }
+  .header-text p { font-size: 13px; opacity: 0.75; margin-top: 3px; }
+  .header-actions { margin-left: auto; }
+  .btn-ghost { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.25); color: white; padding: 7px 16px; border-radius: 20px; font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 500; transition: background 0.2s; }
+  .btn-ghost:hover { background: rgba(255,255,255,0.2); }
+
+  /* TABS */
+  .tab-bar { display: flex; background: white; border-bottom: 2px solid var(--cloud); padding: 0 32px; gap: 4px; }
+  .tab { padding: 14px 20px; font-size: 14px; font-weight: 500; cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; color: var(--text-light); transition: all 0.2s; }
+  .tab.active { color: var(--nebula); border-bottom-color: var(--nebula); }
+
+  /* MAIN */
+  .main { max-width: 900px; margin: 0 auto; padding: 28px 20px; }
+
+  /* EVENT PILLS */
+  .event-filter { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+  .pill { padding: 7px 16px; border-radius: 20px; font-size: 13px; font-weight: 500; cursor: pointer; border: 1.5px solid var(--text-light); color: var(--text-mid); background: white; transition: all 0.18s; }
+  .pill.active { background: var(--nebula); border-color: var(--nebula); color: white; }
+
+  /* DAY SECTIONS */
+  .day-section { margin-bottom: 32px; }
+  .day-header {
+    display: flex; align-items: center; gap: 12px;
+    background: linear-gradient(135deg, var(--space) 0%, var(--nebula) 100%);
+    color: white; border-radius: 14px 14px 0 0; padding: 16px 20px;
+  }
+  .day-emoji { font-size: 22px; }
+  .day-title { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; }
+  .day-subtitle { font-size: 12px; opacity: 0.75; margin-top: 2px; }
+  .day-body { background: white; border: 1.5px solid var(--cloud); border-top: none; border-radius: 0 0 14px 14px; padding: 20px; }
+  .day-desc { font-size: 13px; color: var(--text-mid); line-height: 1.6; margin-bottom: 18px; }
+
+  /* ITEM CARDS */
+  .items-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+  .item-card { background: var(--cream); border-radius: 10px; padding: 14px 16px; border: 1.5px solid var(--cloud); transition: box-shadow 0.2s, border-color 0.2s; position: relative; }
+  .item-card:hover { box-shadow: 0 3px 14px var(--shadow); border-color: var(--aqua); }
+  .item-card.full { opacity: 0.5; }
+  .item-card.full::after { content: '✓'; position: absolute; top: 10px; right: 10px; background: var(--green); color: white; font-size: 11px; font-weight: 700; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .item-name { font-weight: 600; font-size: 14px; margin-bottom: 10px; line-height: 1.4; }
+  .progress-wrap { margin-bottom: 10px; }
+  .progress-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-light); margin-bottom: 4px; }
+  .progress-bar { height: 5px; background: var(--cloud); border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 3px; background: var(--aqua); transition: width 0.4s ease; }
+  .progress-fill.warn { background: var(--gold); }
+  .progress-fill.done { background: var(--green); }
+  .btn-claim { width: 100%; padding: 8px; border-radius: 7px; border: none; background: var(--nebula); color: white; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+  .btn-claim:hover { background: var(--space); }
+  .btn-claim:disabled { background: var(--cloud); color: var(--text-light); cursor: not-allowed; }
+
+  /* INFO DAYS */
+  .info-day { background: linear-gradient(135deg, var(--gold-light), #fff8f0); border: 1.5px solid #f0d890; border-radius: 10px; padding: 18px 20px; }
+  .info-day .info-icon { font-size: 28px; margin-bottom: 10px; }
+  .info-day p { font-size: 13px; color: var(--text-mid); line-height: 1.6; }
+
+  /* VOLUNTEER CARDS */
+  .volunteer-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+  .vol-card { background: var(--aqua-pale); border: 1.5px solid var(--aqua); border-radius: 10px; padding: 14px 16px; }
+  .vol-card.full { opacity: 0.5; background: var(--cloud); border-color: var(--cloud); }
+  .vol-role { font-weight: 600; font-size: 13px; margin-bottom: 4px; }
+  .vol-time { font-size: 11px; color: var(--text-mid); margin-bottom: 10px; }
+
+  /* MODALS */
+  .modal-bg { display: none; position: fixed; inset: 0; background: rgba(26,26,46,0.55); z-index: 100; align-items: center; justify-content: center; padding: 20px; }
+  .modal-bg.open { display: flex; }
+  .modal { background: white; border-radius: 18px; padding: 32px; max-width: 440px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.25); animation: popIn 0.22s ease; }
+  @keyframes popIn { from{transform:scale(0.93);opacity:0} to{transform:scale(1);opacity:1} }
+  .modal h3 { font-family: 'Playfair Display', serif; font-size: 20px; margin-bottom: 6px; }
+  .modal .sub { font-size: 13px; color: var(--text-light); margin-bottom: 22px; }
+  .field { margin-bottom: 16px; }
+  .field label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--text-mid); }
+  .field input, .field select, .field textarea { width: 100%; padding: 10px 14px; border: 1.5px solid var(--cloud); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--text); transition: border-color 0.2s; outline: none; }
+  .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--nebula); }
+  .field textarea { resize: vertical; min-height: 70px; }
+  .privacy-note { background: var(--aqua-pale); border-radius: 8px; padding: 10px 14px; font-size: 12px; color: #0077aa; margin-bottom: 20px; line-height: 1.5; }
+  .modal-actions { display: flex; gap: 10px; }
+  .btn-cancel { flex: 1; padding: 11px; border-radius: 8px; border: 1.5px solid var(--cloud); background: white; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; color: var(--text-mid); }
+  .btn-submit { flex: 2; padding: 11px; border-radius: 8px; border: none; background: var(--nebula); color: white; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+  .btn-submit:hover { background: var(--space); }
+
+  /* PASSCODE SCREEN */
+  .passcode-screen { text-align: center; padding: 60px 20px; max-width: 380px; margin: 0 auto; }
+  .passcode-screen .lock { font-size: 48px; margin-bottom: 16px; }
+  .passcode-screen h2 { font-family: 'Playfair Display', serif; font-size: 24px; margin-bottom: 8px; }
+  .passcode-screen p { font-size: 14px; color: var(--text-mid); margin-bottom: 24px; }
+  .passcode-input { width: 100%; padding: 12px 16px; border: 2px solid var(--cloud); border-radius: 10px; font-size: 16px; font-family: 'DM Sans', sans-serif; outline: none; text-align: center; letter-spacing: 4px; margin-bottom: 12px; transition: border-color 0.2s; }
+  .passcode-input:focus { border-color: var(--nebula); }
+  .btn-unlock { width: 100%; padding: 12px; border-radius: 10px; border: none; background: var(--nebula); color: white; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+  .btn-unlock:hover { background: var(--space); }
+  .passcode-error { color: var(--star); font-size: 13px; margin-top: 8px; display: none; }
+
+  /* ADMIN */
+  .admin-section { margin-bottom: 36px; }
+  .section-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .section-head h2 { font-family: 'Playfair Display', serif; font-size: 20px; }
+  .stats-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 28px; }
+  .stat-box { background: white; border-radius: 12px; padding: 16px; border: 1.5px solid var(--cloud); text-align: center; }
+  .stat-box .num { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: var(--nebula); }
+  .stat-box .lbl { font-size: 11px; color: var(--text-light); margin-top: 2px; }
+  .admin-table-wrap { background: white; border-radius: 14px; border: 1.5px solid var(--cloud); overflow: hidden; margin-bottom: 16px; }
+  .items-table { width: 100%; border-collapse: collapse; }
+  .items-table th { text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-light); padding: 10px 14px; border-bottom: 2px solid var(--cloud); background: #fafafe; }
+  .items-table td { padding: 10px 14px; font-size: 13px; border-bottom: 1px solid var(--cloud); vertical-align: middle; }
+  .items-table tr:last-child td { border: none; }
+  .tag { display: inline-block; padding: 2px 9px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+  .tag-mon { background: #fff0e0; color: #c07000; }
+  .tag-tue { background: #e8f8ee; color: #1a7a40; }
+  .tag-wed { background: #f0e8ff; color: #6030a0; }
+  .passcode-change { background: white; border-radius: 14px; padding: 20px; border: 1.5px solid var(--cloud); }
+  .passcode-change h3 { font-size: 15px; font-weight: 600; margin-bottom: 14px; }
+  .passcode-row { display: flex; gap: 10px; align-items: flex-end; }
+  .passcode-row .field { flex: 1; margin: 0; }
+  .btn-save-pc { padding: 10px 20px; border-radius: 8px; border: none; background: var(--nebula); color: white; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--space); color: white; padding: 12px 24px; border-radius: 30px; font-size: 14px; font-weight: 500; z-index: 200; transition: transform 0.3s ease; white-space: nowrap; }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+  .empty-state { text-align: center; padding: 32px 20px; color: var(--text-light); }
+  .empty-state .icon { font-size: 36px; margin-bottom: 10px; }
+  .btn-logout { background: none; border: 1px solid rgba(255,255,255,0.3); color: white; padding: 6px 14px; border-radius: 16px; font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; margin-left: 8px; }
+  .btn-export { display: inline-flex; align-items: center; gap: 7px; padding: 9px 20px; border-radius: 22px; border: none; background: #27ae60; color: white; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+  .btn-export:hover { background: #219653; }
+  .section-divider { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-light); margin: 20px 0 10px; }
+  /* ZERO SIGNUP HIGHLIGHT */
+  .item-card.needs-help { border-color: #f5a623; background: #fffdf5; }
+  .item-card.needs-help:hover { border-color: #e8940a; }
+  .needs-help-badge { display: inline-block; background: #fff3cd; color: #856404; border: 1px solid #ffd56b; border-radius: 10px; font-size: 10px; font-weight: 700; padding: 2px 8px; margin-bottom: 8px; letter-spacing: 0.3px; }
+  /* COMMITMENT LIST */
+  .commitment-list { margin: 6px 0 10px; padding: 0; list-style: none; }
+  .commitment-list li { font-size: 11px; color: var(--text-mid); padding: 3px 0; border-bottom: 1px dashed var(--cloud); line-height: 1.4; }
+  .commitment-list li:last-child { border: none; }
+  .commitment-count { font-size: 12px; font-weight: 600; color: var(--green); margin-bottom: 4px; }
+  .commitment-count.zero { color: var(--text-light); font-weight: 400; font-style: italic; }
+
+  /* RESOURCE LINKS BANNER */
+  .resource-banner {
+    background: linear-gradient(135deg, #1a1a2e, #0f3460);
+    border-radius: 14px;
+    padding: 18px 22px;
+    margin-bottom: 26px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .resource-banner-text { flex: 1; min-width: 180px; }
+  .resource-banner-text p { font-size: 13px; color: rgba(255,255,255,0.75); margin-top: 3px; line-height: 1.5; }
+  .resource-banner-text strong { color: white; font-size: 14px; }
+  .resource-links { display: flex; gap: 10px; flex-wrap: wrap; }
+  .resource-link {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 9px 16px; border-radius: 22px;
+    font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
+    text-decoration: none; transition: all 0.2s; white-space: nowrap;
+  }
+  .resource-link.amazon { background: #ff9900; color: #111; }
+  .resource-link.amazon:hover { background: #ffb347; }
+  .resource-link.favorites { background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.3); }
+  .resource-link.favorites:hover { background: rgba(255,255,255,0.25); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="stars" id="starsEl"></div>
+  <div class="header-inner">
+    <div class="school-logo">🚀</div>
+    <div class="header-text">
+      <h1>Merryhill Midtown — Teacher Appreciation Week</h1>
+      <p>May 4–8, 2025 · Thank a star! 🌟</p>
+    </div>
+    <div class="header-actions" id="headerActions">
+      <button class="btn-ghost" onclick="showAdminGate()">⚙ Admin</button>
+    </div>
+  </div>
+</header>
+
+<div class="tab-bar" id="tabBar">
+  <div class="tab active" id="tab-parent" onclick="switchTab(&#39;parent&#39;)">Sign Up to Help</div>
+  <div class="tab" id="tab-admin" style="display:none" onclick="switchTab(&#39;admin&#39;)">Admin Dashboard</div>
+</div>
+
+<!-- PARENT VIEW -->
+<div id="view-parent" class="main">
+
+  <div class="resource-banner">
+    <div class="resource-banner-text">
+      <strong>📦 Helpful Resources</strong>
+      <p>Shop directly from the school wish list, or browse each staff member's favorite things before filling a goodie bag.</p>
+    </div>
+    <div class="resource-links">
+      <a class="resource-link amazon" href="https://www.amazon.com/hz/wishlist/ls/EZ54WILWQ08V?ref_=wl_share" target="_blank" rel="noopener">
+        🛒 Amazon Wish List
+      </a>
+      <a class="resource-link favorites" href="https://docs.google.com/spreadsheets/d/1dHvLsuou86sfjnlCQqKTA9uhcVu4XlwgrDO2rplvMz4/edit?usp=sharing" target="_blank" rel="noopener">
+        ⭐ Staff Favorite Things
+      </a>
+    </div>
+  </div>
+
+  <div class="event-filter" id="eventFilter"></div>
+  <div id="daysList"></div>
+</div>
+
+<!-- ADMIN GATE -->
+<div id="view-adminGate" class="main" style="display:none">
+  <div class="passcode-screen">
+    <div class="lock">🔐</div>
+    <h2>Admin Access</h2>
+    <p>Enter the admin passcode to manage events, items, and view signups.</p>
+    <input type="password" class="passcode-input" id="passcodeInput" placeholder="••••••" onkeydown="if(event.key===&#39;Enter&#39;)tryUnlock()">
+    <button class="btn-unlock" onclick="tryUnlock()">Unlock Dashboard</button>
+    <div class="passcode-error" id="passcodeError">Incorrect passcode. Please try again.</div>
+    <p style="margin-top:20px;font-size:12px;color:var(--text-light)">Contact your school coordinator for access.</p>
+  </div>
+</div>
+
+<!-- ADMIN VIEW -->
+<div id="view-admin" class="main" style="display:none">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px;">
+    <div>
+      <div style="font-family:&#39;Playfair Display&#39;,serif;font-size:22px;font-weight:700;">Admin Dashboard</div>
+      <div style="font-size:13px;color:var(--text-light);margin-top:2px;">Merryhill Midtown · Teacher Appreciation Week</div>
+    </div>
+    <button class="btn-export" onclick="exportToXlsx()">⬇ Export Signups (.xlsx)</button>
+  </div>
+  <div class="stats-bar" id="statsBar"></div>
+
+  <!-- Passcode change -->
+  <div class="admin-section">
+    <div class="section-head"><h2>🔐 Admin Passcode</h2></div>
+    <div class="passcode-change">
+      <h3>Change Passcode</h3>
+      <div class="passcode-row">
+        <div class="field"><label>New Passcode</label><input type="password" id="newPasscode" placeholder="Enter new passcode"></div>
+        <div class="field"><label>Confirm</label><input type="password" id="confirmPasscode" placeholder="Confirm"></div>
+        <button class="btn-save-pc" onclick="changePasscode()">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Donation signups -->
+  <div class="admin-section">
+    <div class="section-head"><h2>🛒 Donation Signups</h2></div>
+    <div class="admin-table-wrap">
+      <table class="items-table"><thead><tr><th>Name</th><th>Email</th><th>Item</th><th>Day</th><th>Notes</th></tr></thead><tbody id="donationSignupsBody"></tbody></table>
+    </div>
+  </div>
+
+  <!-- Volunteer signups -->
+  <div class="admin-section">
+    <div class="section-head"><h2>🌸 Volunteer Signups</h2></div>
+    <div class="admin-table-wrap">
+      <table class="items-table"><thead><tr><th>Name</th><th>Email</th><th>Role</th></tr></thead><tbody id="volunteerSignupsBody"></tbody></table>
+    </div>
+  </div>
+
+  <!-- Item fill rates -->
+  <div class="admin-section">
+    <div class="section-head"><h2>📊 Donation Item Status</h2></div>
+    <div class="admin-table-wrap">
+      <table class="items-table"><thead><tr><th>Item</th><th>Day</th><th>Signed Up</th></tr></thead><tbody id="itemStatusBody"></tbody></table>
+    </div>
+  </div>
+</div>
+
+<!-- Claim Modal -->
+<div class="modal-bg" id="claimModal">
+  <div class="modal">
+    <h3 id="claimItemName"></h3>
+    <p class="sub" id="claimItemSub"></p>
+    <div class="privacy-note">🔒 Your name and email are only visible to school admins. Other parents only see the count of signups.</div>
+    <div class="field"><label>Your Name *</label><input type="text" id="claimName" placeholder="Jane Smith"></div>
+    <div class="field"><label>Email Address *</label><input type="email" id="claimEmail" placeholder="jane@email.com"></div>
+    <div class="field" id="claimQtyField" style="display:none"><label>Quantity / Details</label><textarea id="claimNotes" placeholder="e.g. 2 dozen glazed donuts"></textarea></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal(&#39;claimModal&#39;)">Cancel</button>
+      <button class="btn-submit" onclick="submitClaim()">Confirm Sign Up ✓</button>
+    </div>
+  </div>
+</div>
+
+<!-- Volunteer Modal -->
+<div class="modal-bg" id="volModal">
+  <div class="modal">
+    <h3 id="volRoleName"></h3>
+    <p class="sub" id="volRoleSub"></p>
+    <div class="privacy-note">🔒 Your name and email are only visible to school admins.</div>
+    <div class="field"><label>Your Name *</label><input type="text" id="volName" placeholder="Jane Smith"></div>
+    <div class="field"><label>Email Address *</label><input type="email" id="volEmail" placeholder="jane@email.com"></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal(&#39;volModal&#39;)">Cancel</button>
+      <button class="btn-submit" onclick="submitVol()">Sign Up to Volunteer ✓</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── DEFAULT PASSCODE (change via admin panel) ──
+const DEFAULT_PASSCODE = 'merryhill2025';
+
+const DAYS = [
+  {
+    id: 'mon', emoji: '☕', name: 'Cosmic Coffee Breakfast', date: 'Monday, May 4',
+    desc: 'We\'re hosting breakfast in the lounge for ~55 employees. All quantities welcome — donate as much or as little as you\'d like! Donations must be dropped off in the front office by 8:30AM on Monday, 5/4.',
+    type: 'donation',
+    items: [
+      'Donuts','Bagels & Cream Cheese','Danishes / Pastries / Croissants',
+      'Muffins','Fruit','Juice','Yogurt & Granola (for parfaits)','Coffee'
+    ]
+  },
+  {
+    id: 'tue', emoji: '🌸', name: 'Astro Arrangements', date: 'Tuesday, May 5',
+    desc: 'Students will build a floral arrangement for each staff member from 7:45–8:30AM in the gym. We need flower donations and parent volunteers! Florists often discount or donate flowers for school events — mention it when you call. Donations may be dropped off Monday afternoon/evening or Tuesday morning by 7:45AM.',
+    type: 'flowers_and_volunteers',
+    flowerOptions: ['1–2 dozen stems','2–4 dozen stems','4–6 dozen stems'],
+    volunteerRoles: [
+      { id: 'v1', role: 'Setup Help', time: '7:30–7:45AM', slots: 4 },
+      { id: 'v2', role: 'Assist Students with Arranging', time: '7:45–8:30AM', slots: 6 },
+      { id: 'v3', role: 'Cleanup Crew', time: '8:30–8:45AM', slots: 4 },
+    ]
+  },
+  {
+    id: 'wed', emoji: '🍬', name: 'Solar Sweets Snack Bar', date: 'Wednesday, May 6',
+    desc: 'A themed snack bar in the lounge for ~55 employees! All quantities welcome. Donations must be dropped off in the front office by 6:00PM on Tuesday, 5/5. Some items are available on the Amazon wish list.',
+    type: 'donation',
+    items: [
+      'Milky Way candy 🌌','Starbursts ⭐','Mars Bars 🪐','Cheeseballs (Spaceballs) 🧀',
+      'Fruit Kabobs (Rockets) 🍓','Moon Pies 🌙','Peach Rings (Saturn\'s Rings) 🪐',
+      'Gummy Worms (Space Worms) 🪱','Chocolate Mini Donuts (Black Holes) 🍩',
+      'Sour Candy Belts (Astro Belts) 🛸','Caramel Corn / Choc. Popcorn (Asteroids) 🍿',
+      'Orbit Gum 🌍','Pop Rocks 💥'
+    ]
+  },
+  {
+    id: 'thu', emoji: '🌙', name: 'Lunar Lunch', date: 'Thursday, May 7',
+    type: 'info',
+    desc: 'Staff will enjoy a catered Lunar Lunch! Donations aren\'t needed for this event, but if you\'d like to contribute, drop cash or a check at the front desk — funds will be used to purchase lunch for our amazing staff. 💛'
+  },
+  {
+    id: 'fri', emoji: '🎁', name: 'Galactic Goodie Bags', date: 'Friday, May 8',
+    type: 'info',
+    desc: 'Each staff member will receive a goodie bag filled with treats! Stop by the round couch anytime during the week to drop gift cards and small treats into labeled tote bags — these will be delivered Friday afternoon. Large or heavy items are best given directly to the staff member. Want to contribute cash? Drop it at the front desk and it\'ll be used to "back fill" bags so every staff member gets something special! 🚀'
+  }
+];
+
+// Pre-seeded from existing Google Form responses (imported 4/23/2025)
+const SEEDED_DONATIONS = [
+  // MONDAY
+  {id:'s1', name:'Jean Hurst', email:'jk-hurst@att.net', dayId:'mon', itemName:'Danishes / Pastries / Croissants', notes:'2 dozen cinnamon rolls', ts:0, seeded:true},
+  {id:'s2', name:'Angela Mamangun', email:'angela.l.mamangun@gmail.com', dayId:'mon', itemName:'Bagels & Cream Cheese', notes:'2 dozen Noah's bagels', ts:0, seeded:true},
+  {id:'s3', name:'Angela Mamangun', email:'angela.l.mamangun@gmail.com', dayId:'mon', itemName:'Coffee', notes:'2 coffee boxes', ts:0, seeded:true},
+  {id:'s4', name:'Melissa Chechourka', email:'melifig88@gmail.com', dayId:'mon', itemName:'Yogurt & Granola (for parfaits)', notes:'2 lg containers yogurt, 2 bags granola', ts:0, seeded:true},
+  {id:'s5', name:'Jane Allen', email:'Janeswierzbin06@gmail.com', dayId:'mon', itemName:'Muffins', notes:'', ts:0, seeded:true},
+  {id:'s6', name:'Camille Binon', email:'camillerasmussen@hotmail.com', dayId:'mon', itemName:'Danishes / Pastries / Croissants', notes:'1 dozen', ts:0, seeded:true},
+  {id:'s7', name:'Hilda Watterson', email:'Wattersonhilda@gmail.com', dayId:'mon', itemName:'Donuts', notes:'2 dozen', ts:0, seeded:true},
+  {id:'s8', name:'Alicia Boomer', email:'alicia.boomer@gmail.com', dayId:'mon', itemName:'Other: Staxx Bread', notes:'', ts:0, seeded:true},
+  {id:'s9', name:'Phil Arthur', email:'Phil_arthur23@yahoo.com', dayId:'mon', itemName:'Bagels & Cream Cheese', notes:'Two dozen mixed bagels', ts:0, seeded:true},
+  {id:'s10', name:'Dena Skiles', email:'Denaskiles@outlook.com', dayId:'mon', itemName:'Bagels & Cream Cheese', notes:'Dozen bagels, 2 cream cheeses', ts:0, seeded:true},
+  {id:'s11', name:'Christina Amaral', email:'christina.k.amaral@gmail.com', dayId:'mon', itemName:'Danishes / Pastries / Croissants', notes:'Assortment from Costco', ts:0, seeded:true},
+  {id:'s12', name:'Christina Amaral', email:'christina.k.amaral@gmail.com', dayId:'mon', itemName:'Muffins', notes:'Assortment from Costco', ts:0, seeded:true},
+  {id:'s13', name:'Jennifer Shin', email:'Jenn_violin@yahoo.com', dayId:'mon', itemName:'Bagels & Cream Cheese', notes:'One dozen + 2 tubs cream cheese', ts:0, seeded:true},
+  {id:'s14', name:'Sophia Manuel', email:'asgee10@gmail.com', dayId:'mon', itemName:'Muffins', notes:'16 muffins — 8 blueberry, 8 chocolate', ts:0, seeded:true},
+  // TUESDAY FLOWERS
+  {id:'s15', name:'Alicia Boomer', email:'alicia.boomer@gmail.com', dayId:'tue', itemName:'1–2 dozen stems', notes:'', ts:0, seeded:true},
+  {id:'s16', name:'Dena Skiles', email:'Denaskiles@outlook.com', dayId:'tue', itemName:'1–2 dozen stems', notes:'', ts:0, seeded:true},
+  {id:'s17', name:'Marian Sheppard', email:'marian.sheppard.lmft@gmail.com', dayId:'tue', itemName:'2–4 dozen stems', notes:'', ts:0, seeded:true},
+  {id:'s18', name:'Erika Arthur', email:'Lerikalmaec@aol.com', dayId:'tue', itemName:'4–6 dozen stems', notes:'', ts:0, seeded:true},
+  // WEDNESDAY
+  {id:'s19', name:'Angela Mamangun', email:'angela.l.mamangun@gmail.com', dayId:'wed', itemName:'Starbursts ⭐', notes:'5lb bag of Starbursts', ts:0, seeded:true},
+  {id:'s20', name:'Angela Mamangun', email:'angela.l.mamangun@gmail.com', dayId:'wed', itemName:'Other: Airheads + balloon garland (from wish list)', notes:'3x18 pack airheads, 1 balloon garland pack', ts:0, seeded:true},
+  {id:'s21', name:'Melissa Chechourka', email:'melifig88@gmail.com', dayId:'wed', itemName:'Starbursts ⭐', notes:'Family size bag', ts:0, seeded:true},
+  {id:'s22', name:'Camille Binon', email:'camillerasmussen@hotmail.com', dayId:'wed', itemName:'Peach Rings (Saturn's Rings) 🪐', notes:'2 packages', ts:0, seeded:true},
+  {id:'s23', name:'Camille Binon', email:'camillerasmussen@hotmail.com', dayId:'wed', itemName:'Gummy Worms (Space Worms) 🪱', notes:'2 packages', ts:0, seeded:true},
+  {id:'s24', name:'Shephali Patel', email:'shephpatel@yahoo.com', dayId:'wed', itemName:'Other: Rocket Popsicles (cooler provided)', notes:'60 popsicles', ts:0, seeded:true},
+  {id:'s25', name:'Raelyn Stoffle', email:'rstoffle@earthlink.net', dayId:'wed', itemName:'Milky Way candy 🌌', notes:'2 bags', ts:0, seeded:true},
+  {id:'s26', name:'Raelyn Stoffle', email:'rstoffle@earthlink.net', dayId:'wed', itemName:'Chocolate Mini Donuts (Black Holes) 🍩', notes:'Large container of donut holes', ts:0, seeded:true},
+  {id:'s27', name:'Dena Skiles', email:'Denaskiles@outlook.com', dayId:'wed', itemName:'Gummy Worms (Space Worms) 🪱', notes:'2 value packs from Amazon wishlist', ts:0, seeded:true},
+  {id:'s28', name:'Christina Amaral', email:'christina.k.amaral@gmail.com', dayId:'wed', itemName:'Orbit Gum 🌍', notes:'14 pack from wishlist', ts:0, seeded:true},
+  {id:'s29', name:'Rebecca Rabovsky', email:'Rebecca.rabovsky@gmail.com', dayId:'wed', itemName:'Orbit Gum 🌍', notes:'12 pack', ts:0, seeded:true},
+  {id:'s30', name:'Sophia Manuel', email:'asgee10@gmail.com', dayId:'wed', itemName:'Gummy Worms (Space Worms) 🪱', notes:'4 bags gummy worms', ts:0, seeded:true},
+];
+
+let state = {
+  passcode: DEFAULT_PASSCODE,
+  donationSignups: [],
+  volunteerSignups: [],
+};
+
+function loadState() {
+  try {
+    const s = localStorage.getItem('merryhillState');
+    if (s) state = JSON.parse(s);
+  } catch(e) {}
+  // Merge seeded signups — add any not already present (by id)
+  const existingIds = new Set(state.donationSignups.map(s => s.id));
+  SEEDED_DONATIONS.forEach(sd => {
+    if (!existingIds.has(sd.id)) state.donationSignups.push(sd);
+  });
+  render();
+}
+
+function saveState() {
+  try { localStorage.setItem('merryhillState', JSON.stringify(state)); } catch(e) {}
+}
+
+let activeDay = 'all';
+let claimCtx = null; // { type:'donation'|'volunteer', dayId, itemName?, roleId?, roleName?, time? }
+let adminUnlocked = false;
+
+// ── RENDER ──
+function render() {
+  renderStars();
+  renderParent();
+  if (adminUnlocked) renderAdmin();
+}
+
+function renderStars() {
+  const c = document.getElementById('starsEl');
+  if (c.children.length) return;
+  for (let i=0; i<30; i++) {
+    const d = document.createElement('div');
+    d.className = 'star-dot';
+    const sz = Math.random()*2+1;
+    d.style.cssText = `width:${sz}px;height:${sz}px;top:${Math.random()*100}%;left:${Math.random()*100}%;animation-delay:${Math.random()*3}s`;
+    c.appendChild(d);
+  }
+}
+
+function renderParent() {
+  // Pills
+  const ef = document.getElementById('eventFilter');
+  ef.innerHTML = '';
+  const allP = mkEl('div','pill'+(activeDay==='all'?' active':''),'All Days');
+  allP.onclick = ()=>{ activeDay='all'; renderParent(); };
+  ef.appendChild(allP);
+  DAYS.forEach(d => {
+    const p = mkEl('div','pill'+(activeDay===d.id?' active':''), d.emoji+' '+d.name);
+    p.onclick = ()=>{ activeDay=d.id; renderParent(); };
+    ef.appendChild(p);
+  });
+
+  // Days
+  const dl = document.getElementById('daysList');
+  dl.innerHTML = '';
+  const toShow = activeDay==='all' ? DAYS : DAYS.filter(d=>d.id===activeDay);
+  toShow.forEach(day => {
+    const sec = document.createElement('div');
+    sec.className = 'day-section';
+
+    const hdr = document.createElement('div');
+    hdr.className = 'day-header';
+    hdr.innerHTML = `<div class="day-emoji">${day.emoji}</div><div><div class="day-title">${day.name}</div><div class="day-subtitle">${day.date}</div></div>`;
+    sec.appendChild(hdr);
+
+    const body = document.createElement('div');
+    body.className = 'day-body';
+    body.innerHTML = `<p class="day-desc">${day.desc}</p>`;
+
+    if (day.type === 'donation') {
+      const grid = document.createElement('div');
+      grid.className = 'items-grid';
+      day.items.forEach(itemName => {
+        const count = state.donationSignups.filter(s=>s.dayId===day.id && s.itemName===itemName).length;
+        const card = document.createElement('div');
+        card.className = 'item-card';
+        card.innerHTML = `
+          <div class="item-name">${esc(itemName)}</div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>${count} signed up</span></div>
+            <div class="progress-bar"><div class="progress-fill${count>0?' done':''}" style="width:${Math.min(count/5,1)*100}%"></div></div>
+          </div>
+          <button class="btn-claim" onclick="openClaim({type:'donation',dayId:'${day.id}',itemName:${JSON.stringify(itemName)}})">
+            I'll Bring This!
+          </button>`;
+        grid.appendChild(card);
+      });
+      body.appendChild(grid);
+    }
+
+    if (day.type === 'flowers_and_volunteers') {
+      // Flowers
+      const fd = document.createElement('div');
+      fd.innerHTML = '<div class="section-divider">🌷 Donate Flowers</div>';
+      const fg = document.createElement('div');
+      fg.className = 'items-grid';
+      day.flowerOptions.forEach(opt => {
+        const signups = state.donationSignups.filter(s=>s.dayId===day.id && s.itemName===opt);
+        const count = signups.length;
+        const needsHelp = count === 0;
+        const card = document.createElement('div');
+        card.className = 'item-card' + (needsHelp ? ' needs-help' : '');
+        const countHTML = count === 0
+          ? '<div class="commitment-count zero">No one yet — be the first! 👋</div>'
+          : `<div class="commitment-count">${count} parent${count>1?'s':''} signed up</div>`;
+        card.innerHTML = `
+          ${needsHelp ? '<div class="needs-help-badge">⚠ Still needed!</div>' : ''}
+          <div class="item-name">🌸 ${esc(opt)}</div>
+          ${countHTML}
+          <button class="btn-claim" onclick="openClaim({type:'donation',dayId:'tue',itemName:${JSON.stringify(opt)}})">I'll Donate!</button>`;
+        fg.appendChild(card);
+      });
+      fd.appendChild(fg);
+      body.appendChild(fd);
+
+      // Volunteers
+      const vd = document.createElement('div');
+      vd.innerHTML = '<div class="section-divider">🙋 Volunteer Slots</div>';
+      const vg = document.createElement('div');
+      vg.className = 'volunteer-grid';
+      day.volunteerRoles.forEach(role => {
+        const count = state.volunteerSignups.filter(s=>s.roleId===role.id).length;
+        const isFull = count >= role.slots;
+        const card = document.createElement('div');
+        card.className = 'vol-card'+(isFull?' full':'');
+        card.innerHTML = `
+          <div class="vol-role">${esc(role.role)}</div>
+          <div class="vol-time">⏰ ${role.time} · ${count}/${role.slots} signed up</div>
+          <button class="btn-claim" ${isFull?'disabled':''} onclick="openClaim({type:'volunteer',roleId:'${role.id}',roleName:${JSON.stringify(role.role)},time:${JSON.stringify(role.time)}})">
+            ${isFull ? '✓ Full' : 'Volunteer!'}
+          </button>`;
+        vg.appendChild(card);
+      });
+      vd.appendChild(vg);
+      body.appendChild(vd);
+    }
+
+    if (day.type === 'info') {
+      const info = document.createElement('div');
+      info.className = 'info-day';
+      info.innerHTML = `<div class="info-icon">${day.emoji}</div><p>${day.desc}</p>`;
+      body.innerHTML = '';
+      body.appendChild(info);
+    }
+
+    sec.appendChild(body);
+    dl.appendChild(sec);
+  });
+}
+
+function renderAdmin() {
+  const totalDon = state.donationSignups.length;
+  const totalVol = state.volunteerSignups.length;
+  const uniqueParents = new Set([
+    ...state.donationSignups.map(s=>s.email),
+    ...state.volunteerSignups.map(s=>s.email)
+  ]).size;
+  document.getElementById('statsBar').innerHTML = `
+    <div class="stat-box"><div class="num">${totalDon}</div><div class="lbl">Donation Signups</div></div>
+    <div class="stat-box"><div class="num">${totalVol}</div><div class="lbl">Volunteers</div></div>
+    <div class="stat-box"><div class="num">${uniqueParents}</div><div class="lbl">Unique Parents</div></div>
+    <div class="stat-box"><div class="num">${totalDon+totalVol}</div><div class="lbl">Total Commitments</div></div>`;
+
+  // Donation signups
+  const db = document.getElementById('donationSignupsBody');
+  db.innerHTML = '';
+  if (!state.donationSignups.length) {
+    db.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--text-light)">No signups yet</td></tr>';
+  } else {
+    state.donationSignups.forEach(s => {
+      const day = DAYS.find(d=>d.id===s.dayId);
+      const tagCls = s.dayId==='mon'?'tag-mon':s.dayId==='tue'?'tag-tue':'tag-wed';
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${esc(s.name)}</td><td>${esc(s.email)}</td><td>${esc(s.itemName)}</td><td><span class="tag ${tagCls}">${day?day.name:''}</span></td><td style="color:var(--text-mid)">${esc(s.notes||'—')}</td>`;
+      db.appendChild(tr);
+    });
+  }
+
+  // Volunteer signups
+  const vb = document.getElementById('volunteerSignupsBody');
+  vb.innerHTML = '';
+  if (!state.volunteerSignups.length) {
+    vb.innerHTML = '<tr><td colspan="3" style="text-align:center;padding:20px;color:var(--text-light)">No volunteers yet</td></tr>';
+  } else {
+    state.volunteerSignups.forEach(s => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${esc(s.name)}</td><td>${esc(s.email)}</td><td>${esc(s.roleName)}</td>`;
+      vb.appendChild(tr);
+    });
+  }
+
+  // Item status
+  const ib = document.getElementById('itemStatusBody');
+  ib.innerHTML = '';
+  DAYS.filter(d=>d.type==='donation'||d.type==='flowers_and_volunteers').forEach(day => {
+    const items = day.type==='donation' ? day.items : day.flowerOptions;
+    items.forEach(itemName => {
+      const count = state.donationSignups.filter(s=>s.dayId===day.id && s.itemName===itemName).length;
+      const tagCls = day.id==='mon'?'tag-mon':day.id==='tue'?'tag-tue':'tag-wed';
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${esc(itemName)}</td><td><span class="tag ${tagCls}">${day.name}</span></td><td style="font-weight:600;color:${count>0?'var(--green)':'var(--text-light)'}">${count > 0 ? count+' signed up' : 'None yet'}</td>`;
+      ib.appendChild(tr);
+    });
+  });
+}
+
+// ── CLAIM / VOLUNTEER ──
+function openClaim(ctx) {
+  claimCtx = ctx;
+  if (ctx.type === 'donation') {
+    document.getElementById('claimItemName').textContent = ctx.itemName;
+    const day = DAYS.find(d=>d.id===ctx.dayId);
+    document.getElementById('claimItemSub').textContent = day ? day.name+' · '+day.date : '';
+    document.getElementById('claimQtyField').style.display = 'block';
+    document.getElementById('claimNotes').value = '';
+    document.getElementById('claimName').value = '';
+    document.getElementById('claimEmail').value = '';
+    document.getElementById('claimModal').classList.add('open');
+  } else {
+    document.getElementById('volRoleName').textContent = ctx.roleName;
+    document.getElementById('volRoleSub').textContent = '⏰ '+ctx.time+' — Tuesday, May 5';
+    document.getElementById('volName').value = '';
+    document.getElementById('volEmail').value = '';
+    document.getElementById('volModal').classList.add('open');
+  }
+}
+
+function submitClaim() {
+  const name = document.getElementById('claimName').value.trim();
+  const email = document.getElementById('claimEmail').value.trim();
+  const notes = document.getElementById('claimNotes').value.trim();
+  if (!name || !email) { showToast('Please enter your name and email'); return; }
+  if (!email.includes('@')) { showToast('Please enter a valid email'); return; }
+  const dup = state.donationSignups.find(s=>s.email.toLowerCase()===email.toLowerCase()&&s.itemName===claimCtx.itemName&&s.dayId===claimCtx.dayId);
+  if (dup) { showToast("You've already signed up for this item!"); closeModal('claimModal'); return; }
+  state.donationSignups.push({ id:'d'+Date.now(), name, email, itemName: claimCtx.itemName, dayId: claimCtx.dayId, notes, ts: Date.now() });
+  saveState(); closeModal('claimModal'); render();
+  showToast('🎉 Thank you for signing up!');
+}
+
+function submitVol() {
+  const name = document.getElementById('volName').value.trim();
+  const email = document.getElementById('volEmail').value.trim();
+  if (!name || !email) { showToast('Please enter your name and email'); return; }
+  if (!email.includes('@')) { showToast('Please enter a valid email'); return; }
+  const dup = state.volunteerSignups.find(s=>s.email.toLowerCase()===email.toLowerCase()&&s.roleId===claimCtx.roleId);
+  if (dup) { showToast("You've already signed up for this slot!"); closeModal('volModal'); return; }
+  state.volunteerSignups.push({ id:'v'+Date.now(), name, email, roleId: claimCtx.roleId, roleName: claimCtx.roleName, ts: Date.now() });
+  saveState(); closeModal('volModal'); render();
+  showToast('🌟 Thanks for volunteering!');
+}
+
+// ── ADMIN GATE ──
+function showAdminGate() {
+  if (adminUnlocked) { switchTab('admin'); return; }
+  switchView('adminGate');
+  document.getElementById('passcodeInput').value = '';
+  document.getElementById('passcodeError').style.display = 'none';
+}
+
+function tryUnlock() {
+  const val = document.getElementById('passcodeInput').value;
+  if (val === state.passcode) {
+    adminUnlocked = true;
+    document.getElementById('tab-admin').style.display = '';
+    document.getElementById('headerActions').innerHTML = `<button class="btn-ghost" onclick="switchTab('parent')">← Parent View</button><button class="btn-logout" onclick="lockAdmin()">Lock</button>`;
+    switchTab('admin');
+    renderAdmin();
+  } else {
+    document.getElementById('passcodeError').style.display = 'block';
+    document.getElementById('passcodeInput').value = '';
+    document.getElementById('passcodeInput').focus();
+  }
+}
+
+function lockAdmin() {
+  adminUnlocked = false;
+  document.getElementById('tab-admin').style.display = 'none';
+  document.getElementById('headerActions').innerHTML = `<button class="btn-ghost" onclick="showAdminGate()">⚙ Admin</button>`;
+  switchTab('parent');
+}
+
+function changePasscode() {
+  const np = document.getElementById('newPasscode').value;
+  const cp = document.getElementById('confirmPasscode').value;
+  if (!np) { showToast('Please enter a new passcode'); return; }
+  if (np !== cp) { showToast('Passcodes do not match'); return; }
+  if (np.length < 6) { showToast('Passcode must be at least 6 characters'); return; }
+  state.passcode = np;
+  saveState();
+  document.getElementById('newPasscode').value = '';
+  document.getElementById('confirmPasscode').value = '';
+  showToast('✓ Passcode updated successfully');
+}
+
+// ── NAV ──
+function switchTab(tab) {
+  ['parent','adminGate','admin'].forEach(v => {
+    document.getElementById('view-'+v).style.display = 'none';
+  });
+  document.getElementById('view-'+tab).style.display = 'block';
+  ['parent','admin'].forEach(t => {
+    const el = document.getElementById('tab-'+t);
+    if (el) el.className = 'tab'+(t===tab?' active':'');
+  });
+}
+
+function switchView(v) {
+  ['parent','adminGate','admin'].forEach(id => {
+    document.getElementById('view-'+id).style.display = 'none';
+  });
+  document.getElementById('view-'+v).style.display = 'block';
+}
+
+// ── UTILS ──
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 3200);
+}
+
+function mkEl(tag, cls, text) {
+  const e = document.createElement(tag);
+  e.className = cls; e.textContent = text; return e;
+}
+
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+document.querySelectorAll('.modal-bg').forEach(m => {
+  m.addEventListener('click', e => { if(e.target===m) m.classList.remove('open'); });
+});
+
+loadState();
+
+// ── XLSX EXPORT ──
+function exportToXlsx() {
+  if (!state.donationSignups.length && !state.volunteerSignups.length) {
+    showToast('No signups to export yet'); return;
+  }
+
+  const wb = XLSX.utils.book_new();
+
+  // Sheet 1: Donation Signups
+  const donRows = [['Name', 'Email', 'Item', 'Event', 'Notes', 'Signed Up At']];
+  state.donationSignups.forEach(s => {
+    const day = DAYS.find(d => d.id === s.dayId);
+    donRows.push([
+      s.name, s.email, s.itemName,
+      day ? day.name : '',
+      s.notes || '',
+      s.ts ? new Date(s.ts).toLocaleString() : ''
+    ]);
+  });
+  const ws1 = XLSX.utils.aoa_to_sheet(donRows);
+  ws1['!cols'] = [22,28,28,24,28,20].map(w => ({ wch: w }));
+  XLSX.utils.book_append_sheet(wb, ws1, 'Donation Signups');
+
+  // Sheet 2: Volunteer Signups
+  const volRows = [['Name', 'Email', 'Role', 'Time', 'Signed Up At']];
+  state.volunteerSignups.forEach(s => {
+    volRows.push([
+      s.name, s.email, s.roleName, s.time || '',
+      s.ts ? new Date(s.ts).toLocaleString() : ''
+    ]);
+  });
+  const ws2 = XLSX.utils.aoa_to_sheet(volRows);
+  ws2['!cols'] = [22,28,28,18,20].map(w => ({ wch: w }));
+  XLSX.utils.book_append_sheet(wb, ws2, 'Volunteer Signups');
+
+  // Sheet 3: Item Status Summary
+  const statusRows = [['Item', 'Event', 'Total Signups']];
+  DAYS.forEach(day => {
+    if (day.type === 'info') return;
+    const items = day.items || [];
+    items.forEach(itemName => {
+      const count = state.donationSignups.filter(s => s.dayId === day.id && s.itemName === itemName).length;
+      statusRows.push([itemName, day.name, count]);
+    });
+  });
+  const ws3 = XLSX.utils.aoa_to_sheet(statusRows);
+  ws3['!cols'] = [30,24,16].map(w => ({ wch: w }));
+  XLSX.utils.book_append_sheet(wb, ws3, 'Item Status');
+
+  // Sheet 4: Email Draft
+  const zeroMon = ['Fruit','Juice'].filter(item =>
+    !state.donationSignups.some(s => s.dayId==='mon' && s.itemName===item)
+  );
+  const allWedItems = ['Milky Way candy 🌌','Starbursts ⭐','Mars Bars 🪐','Cheeseballs (Spaceballs) 🧀','Fruit Kabobs (Rockets) 🍓','Moon Pies 🌙','Peach Rings (Saturn\'s Rings) 🪐','Gummy Worms (Space Worms) 🪱','Chocolate Mini Donuts (Black Holes) 🍩','Sour Candy Belts (Astro Belts) 🛸','Caramel Corn / Choc. Popcorn (Asteroids) 🍿','Orbit Gum 🌍','Pop Rocks 💥'];
+  const zeroWed = allWedItems.filter(item =>
+    !state.donationSignups.some(s => s.dayId==='wed' && s.itemName===item)
+  );
+  const volCount = state.volunteerSignups.length;
+  const monSection = zeroMon.length
+    ? `Still needed: ${zeroMon.map(i=>i.replace(/[^\w\s&\/()'-]/g,'')).join(' and ')} — no one has signed up for these yet!`
+    : 'Monday breakfast is looking great — thank you!';
+  const volSection = volCount === 0
+    ? 'Flowers are looking good — but we have ZERO volunteers signed up to help students with arrangements. We need helpers for setup (7:30AM), arranging (7:45–8:30AM), and cleanup (8:30AM). This is a wonderful way to spend a morning with your child!'
+    : `Flowers and volunteers are covered — thank you to our ${volCount} volunteer${volCount>1?'s':''}!`;
+  const wedSection = zeroWed.length
+    ? `Still needed: ${zeroWed.map(i=>i.replace(/[\u{1F300}-\u{1FFFF}]/gu,'').trim()).join(', ')} — ${zeroWed.length} item${zeroWed.length>1?'s':''} with no signups yet!`
+    : 'Wednesday snack bar is fully covered — amazing!';
+
+  const emailDraft = `Subject: Teacher Appreciation Week — We Still Need Your Help! 🚀
+
+Hi Merryhill Families,
+
+Thank you to everyone who has already signed up — we have great coverage on bagels, danishes, muffins, and gummy worms! However, we still have several gaps and would love your help filling them.
+
+🌅 MONDAY BREAKFAST (drop off by 8:30AM, May 4)
+${monSection}
+
+🌸 TUESDAY FLOWER ARRANGEMENTS (7:45–8:30AM, May 5)
+${volSection}
+
+🍬 WEDNESDAY SNACK BAR (drop off by 6PM Tuesday, May 5)
+${wedSection}
+
+Sign up here: merryhill.netlify.app
+
+Thank you for helping make this week so special for our incredible staff! 💛
+
+— The Teacher Appreciation Committee`;
+
+  const ws4 = XLSX.utils.aoa_to_sheet([
+    ['SUGGESTED PARENT EMAIL — Copy, review, and send via your usual school communication channel'],
+    [''],
+    ...emailDraft.split('\n').map(line => [line])
+  ]);
+  ws4['!cols'] = [{ wch: 90 }];
+  XLSX.utils.book_append_sheet(wb, ws4, 'Email Draft');
+
+  const date = new Date().toISOString().slice(0,10);
+  XLSX.writeFile(wb, 'Merryhill-Appreciation-Signups-' + date + '.xlsx');
+  showToast('✓ Export downloaded!');
+
+}
+</script>
+
+
+</body></html>
