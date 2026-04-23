@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<!-- saved from url=(0063)file:///Users/lking/Downloads/merryhill-appreciation-app_2.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Merryhill Teacher Appreciation Week</title>
+<link href="./Merryhill Teacher Appreciation Week_files/css2" rel="stylesheet">
+<script src="./Merryhill Teacher Appreciation Week_files/xlsx.full.min.js"></script>
+<style>
+  :root {
+    --space: #1a1a2e;
+    --space-mid: #16213e;
+    --nebula: #0f3460;
+    --star: #e94560;
+    --gold: #f5a623;
+    --gold-light: #fdf3e0;
+    --aqua: #53d8fb;
+    --aqua-pale: #e8f9fd;
+    --cream: #f8f6ff;
+    --text: #1a1a2e;
+    --text-mid: #4a4a6a;
+    --text-light: #9090b0;
+    --cloud: #ebebf5;
+    --shadow: rgba(26,26,46,0.12);
+    --green: #27ae60;
+    --green-pale: #e8f8ee;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text); min-height: 100vh; }
+
+  /* HEADER */
+  header {
+    background: linear-gradient(135deg, var(--space) 0%, var(--nebula) 100%);
+    color: white; position: relative; overflow: hidden;
+  }
+  .stars { position: absolute; inset: 0; pointer-events: none; }
+  .star-dot { position: absolute; border-radius: 50%; background: white; animation: twinkle 3s infinite; }
+  @keyframes twinkle { 0%,100%{opacity:0.3} 50%{opacity:1} }
+  .header-inner { display: flex; align-items: center; gap: 20px; padding: 24px 32px; position: relative; z-index: 1; }
+  .school-logo { width: 60px; height: 60px; border-radius: 50%; background: rgba(255,255,255,0.12); border: 2px solid rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0; }
+  .header-text h1 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; }
+  .header-text p { font-size: 13px; opacity: 0.75; margin-top: 3px; }
+  .header-actions { margin-left: auto; }
+  .btn-ghost { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.25); color: white; padding: 7px 16px; border-radius: 20px; font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 500; transition: background 0.2s; }
+  .btn-ghost:hover { background: rgba(255,255,255,0.2); }
+
+  /* TABS */
+  .tab-bar { display: flex; background: white; border-bottom: 2px solid var(--cloud); padding: 0 32px; gap: 4px; }
+  .tab { padding: 14px 20px; font-size: 14px; font-weight: 500; cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; color: var(--text-light); transition: all 0.2s; }
+  .tab.active { color: var(--nebula); border-bottom-color: var(--nebula); }
+
+  /* MAIN */
+  .main { max-width: 900px; margin: 0 auto; padding: 28px 20px; }
+
+  /* EVENT PILLS */
+  .event-filter { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+  .pill { padding: 7px 16px; border-radius: 20px; font-size: 13px; font-weight: 500; cursor: pointer; border: 1.5px solid var(--text-light); color: var(--text-mid); background: white; transition: all 0.18s; }
+  .pill.active { background: var(--nebula); border-color: var(--nebula); color: white; }
+
+  /* DAY SECTIONS */
+  .day-section { margin-bottom: 32px; }
+  .day-header {
+    display: flex; align-items: center; gap: 12px;
+    background: linear-gradient(135deg, var(--space) 0%, var(--nebula) 100%);
+    color: white; border-radius: 14px 14px 0 0; padding: 16px 20px;
+  }
+  .day-emoji { font-size: 22px; }
+  .day-title { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; }
+  .day-subtitle { font-size: 12px; opacity: 0.75; margin-top: 2px; }
+  .day-body { background: white; border: 1.5px solid var(--cloud); border-top: none; border-radius: 0 0 14px 14px; padding: 20px; }
+  .day-desc { font-size: 13px; color: var(--text-mid); line-height: 1.6; margin-bottom: 18px; }
+
+  /* ITEM CARDS */
+  .items-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+  .item-card { background: var(--cream); border-radius: 10px; padding: 14px 16px; border: 1.5px solid var(--cloud); transition: box-shadow 0.2s, border-color 0.2s; position: relative; }
+  .item-card:hover { box-shadow: 0 3px 14px var(--shadow); border-color: var(--aqua); }
+  .item-card.full { opacity: 0.5; }
+  .item-card.full::after { content: '✓'; position: absolute; top: 10px; right: 10px; background: var(--green); color: white; font-size: 11px; font-weight: 700; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .item-name { font-weight: 600; font-size: 14px; margin-bottom: 10px; line-height: 1.4; }
+  .progress-wrap { margin-bottom: 10px; }
+  .progress-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-light); margin-bottom: 4px; }
+  .progress-bar { height: 5px; background: var(--cloud); border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 3px; background: var(--aqua); transition: width 0.4s ease; }
+  .progress-fill.warn { background: var(--gold); }
+  .progress-fill.done { background: var(--green); }
+  .btn-claim { width: 100%; padding: 8px; border-radius: 7px; border: none; background: var(--nebula); color: white; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+  .btn-claim:hover { background: var(--space); }
+  .btn-claim:disabled { background: var(--cloud); color: var(--text-light); cursor: not-allowed; }
+
+  /* INFO DAYS */
+  .info-day { background: linear-gradient(135deg, var(--gold-light), #fff8f0); border: 1.5px solid #f0d890; border-radius: 10px; padding: 18px 20px; }
+  .info-day .info-icon { font-size: 28px; margin-bottom: 10px; }
+  .info-day p { font-size: 13px; color: var(--text-mid); line-height: 1.6; }
+
+  /* VOLUNTEER CARDS */
+  .volunteer-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+  .vol-card { background: var(--aqua-pale); border: 1.5px solid var(--aqua); border-radius: 10px; padding: 14px 16px; }
+  .vol-card.full { opacity: 0.5; background: var(--cloud); border-color: var(--cloud); }
+  .vol-role { font-weight: 600; font-size: 13px; margin-bottom: 4px; }
+  .vol-time { font-size: 11px; color: var(--text-mid); margin-bottom: 10px; }
+
+  /* MODALS */
+  .modal-bg { display: none; position: fixed; inset: 0; background: rgba(26,26,46,0.55); z-index: 100; align-items: center; justify-content: center; padding: 20px; }
+  .modal-bg.open { display: flex; }
+  .modal { background: white; border-radius: 18px; padding: 32px; max-width: 440px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.25); animation: popIn 0.22s ease; }
+  @keyframes popIn { from{transform:scale(0.93);opacity:0} to{transform:scale(1);opacity:1} }
+  .modal h3 { font-family: 'Playfair Display', serif; font-size: 20px; margin-bottom: 6px; }
+  .modal .sub { font-size: 13px; color: var(--text-light); margin-bottom: 22px; }
+  .field { margin-bottom: 16px; }
+  .field label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--text-mid); }
+  .field input, .field select, .field textarea { width: 100%; padding: 10px 14px; border: 1.5px solid var(--cloud); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--text); transition: border-color 0.2s; outline: none; }
+  .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--nebula); }
+  .field textarea { resize: vertical; min-height: 70px; }
+  .privacy-note { background: var(--aqua-pale); border-radius: 8px; padding: 10px 14px; font-size: 12px; color: #0077aa; margin-bottom: 20px; line-height: 1.5; }
+  .modal-actions { display: flex; gap: 10px; }
+  .btn-cancel { flex: 1; padding: 11px; border-radius: 8px; border: 1.5px solid var(--cloud); background: white; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; color: var(--text-mid); }
+  .btn-submit { flex: 2; padding: 11px; border-radius: 8px; border: none; background: var(--nebula); color: white; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+  .btn-submit:hover { background: var(--space); }
+
+  /* PASSCODE SCREEN */
+  .passcode-screen { text-align: center; padding: 60px 20px; max-width: 380px; margin: 0 auto; }
+  .passcode-screen .lock { font-size: 48px; margin-bottom: 16px; }
+  .passcode-screen h2 { font-family: 'Playfair Display', serif; font-size: 24px; margin-bottom: 8px; }
+  .passcode-screen p { font-size: 14px; color: var(--text-mid); margin-bottom: 24px; }
+  .passcode-input { width: 100%; padding: 12px 16px; border: 2px solid var(--cloud); border-radius: 10px; font-size: 16px; font-family: 'DM Sans', sans-serif; outline: none; text-align: center; letter-spacing: 4px; margin-bottom: 12px; transition: border-color 0.2s; }
+  .passcode-input:focus { border-color: var(--nebula); }
+  .btn-unlock { width: 100%; padding: 12px; border-radius: 10px; border: none; background: var(--nebula); color: white; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+  .btn-unlock:hover { background: var(--space); }
+  .passcode-error { color: var(--star); font-size: 13px; margin-top: 8px; display: none; }
+
+  /* ADMIN */
+  .admin-section { margin-bottom: 36px; }
+  .section-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .section-head h2 { font-family: 'Playfair Display', serif; font-size: 20px; }
+  .stats-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 28px; }
+  .stat-box { background: white; border-radius: 12px; padding: 16px; border: 1.5px solid var(--cloud); text-align: center; }
+  .stat-box .num { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: var(--nebula); }
+  .stat-box .lbl { font-size: 11px; color: var(--text-light); margin-top: 2px; }
+  .admin-table-wrap { background: white; border-radius: 14px; border: 1.5px solid var(--cloud); overflow: hidden; margin-bottom: 16px; }
+  .items-table { width: 100%; border-collapse: collapse; }
+  .items-table th { text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-light); padding: 10px 14px; border-bottom: 2px solid var(--cloud); background: #fafafe; }
+  .items-table td { padding: 10px 14px; font-size: 13px; border-bottom: 1px solid var(--cloud); vertical-align: middle; }
+  .items-table tr:last-child td { border: none; }
+  .tag { display: inline-block; padding: 2px 9px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+  .tag-mon { background: #fff0e0; color: #c07000; }
+  .tag-tue { background: #e8f8ee; color: #1a7a40; }
+  .tag-wed { background: #f0e8ff; color: #6030a0; }
+  .passcode-change { background: white; border-radius: 14px; padding: 20px; border: 1.5px solid var(--cloud); }
+  .passcode-change h3 { font-size: 15px; font-weight: 600; margin-bottom: 14px; }
+  .passcode-row { display: flex; gap: 10px; align-items: flex-end; }
+  .passcode-row .field { flex: 1; margin: 0; }
+  .btn-save-pc { padding: 10px 20px; border-radius: 8px; border: none; background: var(--nebula); color: white; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--space); color: white; padding: 12px 24px; border-radius: 30px; font-size: 14px; font-weight: 500; z-index: 200; transition: transform 0.3s ease; white-space: nowrap; }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+  .empty-state { text-align: center; padding: 32px 20px; color: var(--text-light); }
+  .empty-state .icon { font-size: 36px; margin-bottom: 10px; }
+  .btn-logout { background: none; border: 1px solid rgba(255,255,255,0.3); color: white; padding: 6px 14px; border-radius: 16px; font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; margin-left: 8px; }
+  .btn-export { display: inline-flex; align-items: center; gap: 7px; padding: 9px 20px; border-radius: 22px; border: none; background: #27ae60; color: white; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+  .btn-export:hover { background: #219653; }
+  .section-divider { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-light); margin: 20px 0 10px; }
+
+  /* RESOURCE LINKS BANNER */
+  .resource-banner {
+    background: linear-gradient(135deg, #1a1a2e, #0f3460);
+    border-radius: 14px;
+    padding: 18px 22px;
+    margin-bottom: 26px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .resource-banner-text { flex: 1; min-width: 180px; }
+  .resource-banner-text p { font-size: 13px; color: rgba(255,255,255,0.75); margin-top: 3px; line-height: 1.5; }
+  .resource-banner-text strong { color: white; font-size: 14px; }
+  .resource-links { display: flex; gap: 10px; flex-wrap: wrap; }
+  .resource-link {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 9px 16px; border-radius: 22px;
+    font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
+    text-decoration: none; transition: all 0.2s; white-space: nowrap;
+  }
+  .resource-link.amazon { background: #ff9900; color: #111; }
+  .resource-link.amazon:hover { background: #ffb347; }
+  .resource-link.favorites { background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.3); }
+  .resource-link.favorites:hover { background: rgba(255,255,255,0.25); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="stars" id="starsEl"><div class="star-dot" style="width: 1.15427px; height: 1.15427px; top: 1.02444%; left: 60.7748%; animation-delay: 2.59946s;"></div><div class="star-dot" style="width: 1.95128px; height: 1.95128px; top: 58.8867%; left: 36.7933%; animation-delay: 1.46507s;"></div><div class="star-dot" style="width: 2.46896px; height: 2.46896px; top: 77.7964%; left: 25.4747%; animation-delay: 0.206931s;"></div><div class="star-dot" style="width: 2.16013px; height: 2.16013px; top: 83.8647%; left: 70.2172%; animation-delay: 1.70739s;"></div><div class="star-dot" style="width: 2.59473px; height: 2.59473px; top: 40.9904%; left: 5.64022%; animation-delay: 0.383474s;"></div><div class="star-dot" style="width: 2.99987px; height: 2.99987px; top: 22.8068%; left: 36.4615%; animation-delay: 0.576914s;"></div><div class="star-dot" style="width: 1.61822px; height: 1.61822px; top: 20.1731%; left: 18.3609%; animation-delay: 2.67599s;"></div><div class="star-dot" style="width: 2.93282px; height: 2.93282px; top: 60.8334%; left: 98.3674%; animation-delay: 1.89729s;"></div><div class="star-dot" style="width: 2.69346px; height: 2.69346px; top: 61.3352%; left: 36.0911%; animation-delay: 2.19756s;"></div><div class="star-dot" style="width: 2.3282px; height: 2.3282px; top: 6.60413%; left: 45.9619%; animation-delay: 2.15903s;"></div><div class="star-dot" style="width: 1.70588px; height: 1.70588px; top: 22.0176%; left: 8.10566%; animation-delay: 0.951373s;"></div><div class="star-dot" style="width: 1.52696px; height: 1.52696px; top: 28.0131%; left: 4.7829%; animation-delay: 1.43217s;"></div><div class="star-dot" style="width: 2.55236px; height: 2.55236px; top: 70.3294%; left: 8.54122%; animation-delay: 2.23681s;"></div><div class="star-dot" style="width: 1.42532px; height: 1.42532px; top: 36.2228%; left: 40.081%; animation-delay: 1.62992s;"></div><div class="star-dot" style="width: 2.01015px; height: 2.01015px; top: 72.4313%; left: 83.8218%; animation-delay: 1.82018s;"></div><div class="star-dot" style="width: 1.17711px; height: 1.17711px; top: 77.4166%; left: 65.88%; animation-delay: 1.70657s;"></div><div class="star-dot" style="width: 1.09154px; height: 1.09154px; top: 36.1531%; left: 55.6066%; animation-delay: 0.811997s;"></div><div class="star-dot" style="width: 1.73543px; height: 1.73543px; top: 33.4667%; left: 11.6503%; animation-delay: 0.505823s;"></div><div class="star-dot" style="width: 2.82906px; height: 2.82906px; top: 58.0248%; left: 33.5247%; animation-delay: 1.43078s;"></div><div class="star-dot" style="width: 1.88999px; height: 1.88999px; top: 23.107%; left: 59.5806%; animation-delay: 0.142168s;"></div><div class="star-dot" style="width: 2.1849px; height: 2.1849px; top: 68.6817%; left: 91.7879%; animation-delay: 1.15856s;"></div><div class="star-dot" style="width: 2.46232px; height: 2.46232px; top: 84.3161%; left: 80.7718%; animation-delay: 1.12706s;"></div><div class="star-dot" style="width: 1.98622px; height: 1.98622px; top: 80.792%; left: 82.1664%; animation-delay: 2.25017s;"></div><div class="star-dot" style="width: 2.85419px; height: 2.85419px; top: 59.8909%; left: 36.1929%; animation-delay: 1.44351s;"></div><div class="star-dot" style="width: 2.59301px; height: 2.59301px; top: 24.5719%; left: 5.68054%; animation-delay: 1.88262s;"></div><div class="star-dot" style="width: 2.67445px; height: 2.67445px; top: 92.7701%; left: 47.3965%; animation-delay: 0.97662s;"></div><div class="star-dot" style="width: 2.72346px; height: 2.72346px; top: 99.0134%; left: 63.1587%; animation-delay: 0.0341125s;"></div><div class="star-dot" style="width: 1.6141px; height: 1.6141px; top: 46.6761%; left: 66.0536%; animation-delay: 0.293609s;"></div><div class="star-dot" style="width: 2.95227px; height: 2.95227px; top: 95.5516%; left: 36.2565%; animation-delay: 2.74794s;"></div><div class="star-dot" style="width: 1.44357px; height: 1.44357px; top: 25.5767%; left: 47.2047%; animation-delay: 2.70139s;"></div></div>
+  <div class="header-inner">
+    <div class="school-logo">🚀</div>
+    <div class="header-text">
+      <h1>Merryhill Midtown — Teacher Appreciation Week</h1>
+      <p>May 4–8, 2025 · Thank a star! 🌟</p>
+    </div>
+    <div class="header-actions" id="headerActions">
+      <button class="btn-ghost" onclick="showAdminGate()">⚙ Admin</button>
+    </div>
+  </div>
+</header>
+
+<div class="tab-bar" id="tabBar">
+  <div class="tab active" id="tab-parent" onclick="switchTab(&#39;parent&#39;)">Sign Up to Help</div>
+  <div class="tab" id="tab-admin" style="display:none" onclick="switchTab(&#39;admin&#39;)">Admin Dashboard</div>
+</div>
+
+<!-- PARENT VIEW -->
+<div id="view-parent" class="main">
+
+  <div class="resource-banner">
+    <div class="resource-banner-text">
+      <strong>📦 Helpful Resources</strong>
+      <p>Shop directly from the school wish list, or browse each staff member's favorite things before filling a goodie bag.</p>
+    </div>
+    <div class="resource-links">
+      <a class="resource-link amazon" href="https://www.amazon.com/hz/wishlist/ls/EZ54WILWQ08V?ref_=wl_share" target="_blank" rel="noopener">
+        🛒 Amazon Wish List
+      </a>
+      <a class="resource-link favorites" href="https://docs.google.com/spreadsheets/d/1dHvLsuou86sfjnlCQqKTA9uhcVu4XlwgrDO2rplvMz4/edit?usp=sharing" target="_blank" rel="noopener">
+        ⭐ Staff Favorite Things
+      </a>
+    </div>
+  </div>
+
+  <div class="event-filter" id="eventFilter"><div class="pill active">All Days</div><div class="pill">☕ Cosmic Coffee Breakfast</div><div class="pill">🌸 Astro Arrangements</div><div class="pill">🍬 Solar Sweets Snack Bar</div><div class="pill">🌙 Lunar Lunch</div><div class="pill">🎁 Galactic Goodie Bags</div></div>
+  <div id="daysList"><div class="day-section"><div class="day-header"><div class="day-emoji">☕</div><div><div class="day-title">Cosmic Coffee Breakfast</div><div class="day-subtitle">Monday, May 4</div></div></div><div class="day-body"><p class="day-desc">We're hosting breakfast in the lounge for ~55 employees. All quantities welcome — donate as much or as little as you'd like! Donations must be dropped off in the front office by 8:30AM on Monday, 5/4.</p><div class="items-grid"><div class="item-card">
+          <div class="item-name">Donuts</div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>0 signed up</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+          </div>
+          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;mon&#39;,itemName:" donuts"})"="">
+            I'll Bring This!
+          </button></div><div class="item-card">
+          <div class="item-name">Bagels &amp; Cream Cheese</div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>0 signed up</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+          </div>
+          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;mon&#39;,itemName:" bagels="" &="" cream="" cheese"})"="">
+            I'll Bring This!
+          </button></div><div class="item-card">
+          <div class="item-name">Danishes / Pastries / Croissants</div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>0 signed up</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+          </div>
+          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;mon&#39;,itemName:" danishes="" pastries="" croissants"})"="">
+            I'll Bring This!
+          </button></div><div class="item-card">
+          <div class="item-name">Muffins</div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>0 signed up</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+          </div>
+          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;mon&#39;,itemName:" muffins"})"="">
+            I'll Bring This!
+          </button></div><div class="item-card">
+          <div class="item-name">Fruit</div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>0 signed up</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+          </div>
+          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;mon&#39;,itemName:" fruit"})"="">
+            I'll Bring This!
+          </button></div><div class="item-card">
+          <div class="item-name">Juice</div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>0 signed up</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+          </div>
+          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;mon&#39;,itemName:" juice"})"="">
+            I'll Bring This!
+          </button></div><div class="item-card">
+          <div class="item-name">Yogurt &amp; Granola (for parfaits)</div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>0 signed up</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+          </div>
+          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;mon&#39;,itemName:" yogurt="" &="" granola="" (for="" parfaits)"})"="">
+            I'll Bring This!
+          </button></div><div class="item-card">
+          <div class="item-name">Coffee</div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>0 signed up</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+          </div>
+          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;mon&#39;,itemName:" coffee"})"="">
+            I'll Bring This!
+          </button></div></div></div></div><div class="day-section"><div class="day-header"><div class="day-emoji">🌸</div><div><div class="day-title">Astro Arrangements</div><div class="day-subtitle">Tuesday, May 5</div></div></div><div class="day-body"><p class="day-desc">Students will build a floral arrangement for each staff member from 7:45–8:30AM in the gym. We need flower donations and parent volunteers! Florists often discount or donate flowers for school events — mention it when you call. Donations may be dropped off Monday afternoon/evening or Tuesday morning by 7:45AM.</p><div><div class="section-divider">🌷 Donate Flowers</div><div class="items-grid"><div class="item-card">
+          <div class="item-name">🌸 1–2 dozen stems</div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>0 signed up</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+          </div>
+          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;tue&#39;,itemName:" 1–2="" dozen="" stems"})"="">I'll Donate!</button></div><div class="item-card">
+          <div class="item-name">🌸 2–4 dozen stems</div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>0 signed up</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+          </div>
+          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;tue&#39;,itemName:" 2–4="" dozen="" stems"})"="">I'll Donate!</button></div><div class="item-card">
+          <div class="item-name">🌸 4–6 dozen stems</div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>0 signed up</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+          </div>
+          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;tue&#39;,itemName:" 4–6="" dozen="" stems"})"="">I'll Donate!</button></div></div></div><div><div class="section-divider">🙋 Volunteer Slots</div><div class="volunteer-grid"><div class="vol-card">
+          <div class="vol-role">Setup Help</div>
+          <div class="vol-time">⏰ 7:30–7:45AM · 0/4 signed up</div>
+          <button class="btn-claim" onclick="openClaim({type:&#39;volunteer&#39;,roleId:&#39;v1&#39;,roleName:" setup="" help",time:"7:30–7:45am"})"="">
+            Volunteer!
+          </button></div><div class="vol-card">
+          <div class="vol-role">Assist Students with Arranging</div>
+          <div class="vol-time">⏰ 7:45–8:30AM · 0/6 signed up</div>
+          <button class="btn-claim" onclick="openClaim({type:&#39;volunteer&#39;,roleId:&#39;v2&#39;,roleName:" assist="" students="" with="" arranging",time:"7:45–8:30am"})"="">
+            Volunteer!
+          </button></div><div class="vol-card">
+          <div class="vol-role">Cleanup Crew</div>
+          <div class="vol-time">⏰ 8:30–8:45AM · 0/4 signed up</div>
+          <button class="btn-claim" onclick="openClaim({type:&#39;volunteer&#39;,roleId:&#39;v3&#39;,roleName:" cleanup="" crew",time:"8:30–8:45am"})"="">
+            Volunteer!
+          </button></div></div></div></div></div><div class="day-section"><div class="day-header"><div class="day-emoji">🍬</div><div><div class="day-title">Solar Sweets Snack Bar</div><div class="day-subtitle">Wednesday, May 6</div></div></div><div class="day-body"><p class="day-desc">A themed snack bar in the lounge for ~55 employees! All quantities welcome. Donations must be dropped off in the front office by 6:00PM on Tuesday, 5/5. Some items are available on the Amazon wish list.</p><div class="items-grid"><div class="item-card">
+          <div class="item-name">Milky Way candy 🌌</div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>0 signed up</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+          </div>
+          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;wed&#39;,itemName:" milky="" way="" candy="" 🌌"})"="">
+            I'll Bring This!
+          </button></div><div class="item-card">
+          <div class="item-name">Starbursts ⭐</div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>0 signed up</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+          </div>
+          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;wed&#39;,itemName:" starbursts="" ⭐"})"="">
+            I'll Bring This!
+          </button></div><div class="item-card">
+          <div class="item-name">Mars Bars 🪐</div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>0 signed up</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+          </div>
+          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;wed&#39;,itemName:" mars="" bars="" 🪐"})"="">
+            I'll Bring This!
+          </button></div><div class="item-card">
+          <div class="item-name">Cheeseballs (Spaceballs) 🧀</div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>0 signed up</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+          </div>
+          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;wed&#39;,itemName:" cheeseballs="" (spaceballs)="" 🧀"})"="">
+            I'll Bring This!
+          </button></div><div class="item-card">
+          <div class="item-name">Fruit Kabobs (Rockets) 🍓</div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>0 signed up</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+          </div>
+          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;wed&#39;,itemName:" fruit="" kabobs="" (rockets)="" 🍓"})"="">
+            I'll Bring This!
+          </button></div><div class="item-card">
+          <div class="item-name">Moon Pies 🌙</div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>0 signed up</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+          </div>
+          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;wed&#39;,itemName:" moon="" pies="" 🌙"})"="">
+            I'll Bring This!
+          </button></div><div class="item-card">
+          <div class="item-name">Peach Rings (Saturn's Rings) 🪐</div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>0 signed up</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+          </div>
+          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;wed&#39;,itemName:" peach="" rings="" (saturn's="" rings)="" 🪐"})"="">
+            I'll Bring This!
+          </button></div><div class="item-card">
+          <div class="item-name">Gummy Worms (Space Worms) 🪱</div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>0 signed up</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+          </div>
+          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;wed&#39;,itemName:" gummy="" worms="" (space="" worms)="" 🪱"})"="">
+            I'll Bring This!
+          </button></div><div class="item-card">
+          <div class="item-name">Chocolate Mini Donuts (Black Holes) 🍩</div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>0 signed up</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+          </div>
+          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;wed&#39;,itemName:" chocolate="" mini="" donuts="" (black="" holes)="" 🍩"})"="">
+            I'll Bring This!
+          </button></div><div class="item-card">
+          <div class="item-name">Sour Candy Belts (Astro Belts) 🛸</div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>0 signed up</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+          </div>
+          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;wed&#39;,itemName:" sour="" candy="" belts="" (astro="" belts)="" 🛸"})"="">
+            I'll Bring This!
+          </button></div><div class="item-card">
+          <div class="item-name">Caramel Corn / Choc. Popcorn (Asteroids) 🍿</div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>0 signed up</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+          </div>
+          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;wed&#39;,itemName:" caramel="" corn="" choc.="" popcorn="" (asteroids)="" 🍿"})"="">
+            I'll Bring This!
+          </button></div><div class="item-card">
+          <div class="item-name">Orbit Gum 🌍</div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>0 signed up</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+          </div>
+          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;wed&#39;,itemName:" orbit="" gum="" 🌍"})"="">
+            I'll Bring This!
+          </button></div><div class="item-card">
+          <div class="item-name">Pop Rocks 💥</div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>0 signed up</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+          </div>
+          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;wed&#39;,itemName:" pop="" rocks="" 💥"})"="">
+            I'll Bring This!
+          </button></div></div></div></div><div class="day-section"><div class="day-header"><div class="day-emoji">🌙</div><div><div class="day-title">Lunar Lunch</div><div class="day-subtitle">Thursday, May 7</div></div></div><div class="day-body"><div class="info-day"><div class="info-icon">🌙</div><p>Staff will enjoy a catered Lunar Lunch! Donations aren't needed for this event, but if you'd like to contribute, drop cash or a check at the front desk — funds will be used to purchase lunch for our amazing staff. 💛</p></div></div></div><div class="day-section"><div class="day-header"><div class="day-emoji">🎁</div><div><div class="day-title">Galactic Goodie Bags</div><div class="day-subtitle">Friday, May 8</div></div></div><div class="day-body"><div class="info-day"><div class="info-icon">🎁</div><p>Each staff member will receive a goodie bag filled with treats! Stop by the round couch anytime during the week to drop gift cards and small treats into labeled tote bags — these will be delivered Friday afternoon. Large or heavy items are best given directly to the staff member. Want to contribute cash? Drop it at the front desk and it'll be used to "back fill" bags so every staff member gets something special! 🚀</p></div></div></div></div>
+</div>
+
+<!-- ADMIN GATE -->
+<div id="view-adminGate" class="main" style="display:none">
+  <div class="passcode-screen">
+    <div class="lock">🔐</div>
+    <h2>Admin Access</h2>
+    <p>Enter the admin passcode to manage events, items, and view signups.</p>
+    <input type="password" class="passcode-input" id="passcodeInput" placeholder="••••••" onkeydown="if(event.key===&#39;Enter&#39;)tryUnlock()">
+    <button class="btn-unlock" onclick="tryUnlock()">Unlock Dashboard</button>
+    <div class="passcode-error" id="passcodeError">Incorrect passcode. Please try again.</div>
+    <p style="margin-top:20px;font-size:12px;color:var(--text-light)">Contact your school coordinator for access.</p>
+  </div>
+</div>
+
+<!-- ADMIN VIEW -->
+<div id="view-admin" class="main" style="display:none">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px;">
+    <div>
+      <div style="font-family:&#39;Playfair Display&#39;,serif;font-size:22px;font-weight:700;">Admin Dashboard</div>
+      <div style="font-size:13px;color:var(--text-light);margin-top:2px;">Merryhill Midtown · Teacher Appreciation Week</div>
+    </div>
+    <button class="btn-export" onclick="exportToXlsx()">⬇ Export Signups (.xlsx)</button>
+  </div>
+  <div class="stats-bar" id="statsBar"></div>
+
+  <!-- Passcode change -->
+  <div class="admin-section">
+    <div class="section-head"><h2>🔐 Admin Passcode</h2></div>
+    <div class="passcode-change">
+      <h3>Change Passcode</h3>
+      <div class="passcode-row">
+        <div class="field"><label>New Passcode</label><input type="password" id="newPasscode" placeholder="Enter new passcode"></div>
+        <div class="field"><label>Confirm</label><input type="password" id="confirmPasscode" placeholder="Confirm"></div>
+        <button class="btn-save-pc" onclick="changePasscode()">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Donation signups -->
+  <div class="admin-section">
+    <div class="section-head"><h2>🛒 Donation Signups</h2></div>
+    <div class="admin-table-wrap">
+      <table class="items-table"><thead><tr><th>Name</th><th>Email</th><th>Item</th><th>Day</th><th>Notes</th></tr></thead><tbody id="donationSignupsBody"></tbody></table>
+    </div>
+  </div>
+
+  <!-- Volunteer signups -->
+  <div class="admin-section">
+    <div class="section-head"><h2>🌸 Volunteer Signups</h2></div>
+    <div class="admin-table-wrap">
+      <table class="items-table"><thead><tr><th>Name</th><th>Email</th><th>Role</th></tr></thead><tbody id="volunteerSignupsBody"></tbody></table>
+    </div>
+  </div>
+
+  <!-- Item fill rates -->
+  <div class="admin-section">
+    <div class="section-head"><h2>📊 Donation Item Status</h2></div>
+    <div class="admin-table-wrap">
+      <table class="items-table"><thead><tr><th>Item</th><th>Day</th><th>Signed Up</th></tr></thead><tbody id="itemStatusBody"></tbody></table>
+    </div>
+  </div>
+</div>
+
+<!-- Claim Modal -->
+<div class="modal-bg" id="claimModal">
+  <div class="modal">
+    <h3 id="claimItemName"></h3>
+    <p class="sub" id="claimItemSub"></p>
+    <div class="privacy-note">🔒 Your name and email are only visible to school admins. Other parents only see the count of signups.</div>
+    <div class="field"><label>Your Name *</label><input type="text" id="claimName" placeholder="Jane Smith"></div>
+    <div class="field"><label>Email Address *</label><input type="email" id="claimEmail" placeholder="jane@email.com"></div>
+    <div class="field" id="claimQtyField" style="display:none"><label>Quantity / Details</label><textarea id="claimNotes" placeholder="e.g. 2 dozen glazed donuts"></textarea></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal(&#39;claimModal&#39;)">Cancel</button>
+      <button class="btn-submit" onclick="submitClaim()">Confirm Sign Up ✓</button>
+    </div>
+  </div>
+</div>
+
+<!-- Volunteer Modal -->
+<div class="modal-bg" id="volModal">
+  <div class="modal">
+    <h3 id="volRoleName"></h3>
+    <p class="sub" id="volRoleSub"></p>
+    <div class="privacy-note">🔒 Your name and email are only visible to school admins.</div>
+    <div class="field"><label>Your Name *</label><input type="text" id="volName" placeholder="Jane Smith"></div>
+    <div class="field"><label>Email Address *</label><input type="email" id="volEmail" placeholder="jane@email.com"></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal(&#39;volModal&#39;)">Cancel</button>
+      <button class="btn-submit" onclick="submitVol()">Sign Up to Volunteer ✓</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── DEFAULT PASSCODE (change via admin panel) ──
+const DEFAULT_PASSCODE = 'merryhill2025';
+
+const DAYS = [
+  {
+    id: 'mon', emoji: '☕', name: 'Cosmic Coffee Breakfast', date: 'Monday, May 4',
+    desc: 'We\'re hosting breakfast in the lounge for ~55 employees. All quantities welcome — donate as much or as little as you\'d like! Donations must be dropped off in the front office by 8:30AM on Monday, 5/4.',
+    type: 'donation',
+    items: [
+      'Donuts','Bagels & Cream Cheese','Danishes / Pastries / Croissants',
+      'Muffins','Fruit','Juice','Yogurt & Granola (for parfaits)','Coffee'
+    ]
+  },
+  {
+    id: 'tue', emoji: '🌸', name: 'Astro Arrangements', date: 'Tuesday, May 5',
+    desc: 'Students will build a floral arrangement for each staff member from 7:45–8:30AM in the gym. We need flower donations and parent volunteers! Florists often discount or donate flowers for school events — mention it when you call. Donations may be dropped off Monday afternoon/evening or Tuesday morning by 7:45AM.',
+    type: 'flowers_and_volunteers',
+    flowerOptions: ['1–2 dozen stems','2–4 dozen stems','4–6 dozen stems'],
+    volunteerRoles: [
+      { id: 'v1', role: 'Setup Help', time: '7:30–7:45AM', slots: 4 },
+      { id: 'v2', role: 'Assist Students with Arranging', time: '7:45–8:30AM', slots: 6 },
+      { id: 'v3', role: 'Cleanup Crew', time: '8:30–8:45AM', slots: 4 },
+    ]
+  },
+  {
+    id: 'wed', emoji: '🍬', name: 'Solar Sweets Snack Bar', date: 'Wednesday, May 6',
+    desc: 'A themed snack bar in the lounge for ~55 employees! All quantities welcome. Donations must be dropped off in the front office by 6:00PM on Tuesday, 5/5. Some items are available on the Amazon wish list.',
+    type: 'donation',
+    items: [
+      'Milky Way candy 🌌','Starbursts ⭐','Mars Bars 🪐','Cheeseballs (Spaceballs) 🧀',
+      'Fruit Kabobs (Rockets) 🍓','Moon Pies 🌙','Peach Rings (Saturn\'s Rings) 🪐',
+      'Gummy Worms (Space Worms) 🪱','Chocolate Mini Donuts (Black Holes) 🍩',
+      'Sour Candy Belts (Astro Belts) 🛸','Caramel Corn / Choc. Popcorn (Asteroids) 🍿',
+      'Orbit Gum 🌍','Pop Rocks 💥'
+    ]
+  },
+  {
+    id: 'thu', emoji: '🌙', name: 'Lunar Lunch', date: 'Thursday, May 7',
+    type: 'info',
+    desc: 'Staff will enjoy a catered Lunar Lunch! Donations aren\'t needed for this event, but if you\'d like to contribute, drop cash or a check at the front desk — funds will be used to purchase lunch for our amazing staff. 💛'
+  },
+  {
+    id: 'fri', emoji: '🎁', name: 'Galactic Goodie Bags', date: 'Friday, May 8',
+    type: 'info',
+    desc: 'Each staff member will receive a goodie bag filled with treats! Stop by the round couch anytime during the week to drop gift cards and small treats into labeled tote bags — these will be delivered Friday afternoon. Large or heavy items are best given directly to the staff member. Want to contribute cash? Drop it at the front desk and it\'ll be used to "back fill" bags so every staff member gets something special! 🚀'
+  }
+];
+
+let state = {
+  passcode: DEFAULT_PASSCODE,
+  donationSignups: [],   // { id, name, email, itemName, dayId, notes, ts }
+  volunteerSignups: [],  // { id, name, email, roleId, roleName, ts }
+};
+
+function loadState() {
+  try {
+    const s = localStorage.getItem('merryhillState');
+    if (s) state = JSON.parse(s);
+  } catch(e) {}
+  render();
+}
+
+function saveState() {
+  try { localStorage.setItem('merryhillState', JSON.stringify(state)); } catch(e) {}
+}
+
+let activeDay = 'all';
+let claimCtx = null; // { type:'donation'|'volunteer', dayId, itemName?, roleId?, roleName?, time? }
+let adminUnlocked = false;
+
+// ── RENDER ──
+function render() {
+  renderStars();
+  renderParent();
+  if (adminUnlocked) renderAdmin();
+}
+
+function renderStars() {
+  const c = document.getElementById('starsEl');
+  if (c.children.length) return;
+  for (let i=0; i<30; i++) {
+    const d = document.createElement('div');
+    d.className = 'star-dot';
+    const sz = Math.random()*2+1;
+    d.style.cssText = `width:${sz}px;height:${sz}px;top:${Math.random()*100}%;left:${Math.random()*100}%;animation-delay:${Math.random()*3}s`;
+    c.appendChild(d);
+  }
+}
+
+function renderParent() {
+  // Pills
+  const ef = document.getElementById('eventFilter');
+  ef.innerHTML = '';
+  const allP = mkEl('div','pill'+(activeDay==='all'?' active':''),'All Days');
+  allP.onclick = ()=>{ activeDay='all'; renderParent(); };
+  ef.appendChild(allP);
+  DAYS.forEach(d => {
+    const p = mkEl('div','pill'+(activeDay===d.id?' active':''), d.emoji+' '+d.name);
+    p.onclick = ()=>{ activeDay=d.id; renderParent(); };
+    ef.appendChild(p);
+  });
+
+  // Days
+  const dl = document.getElementById('daysList');
+  dl.innerHTML = '';
+  const toShow = activeDay==='all' ? DAYS : DAYS.filter(d=>d.id===activeDay);
+  toShow.forEach(day => {
+    const sec = document.createElement('div');
+    sec.className = 'day-section';
+
+    const hdr = document.createElement('div');
+    hdr.className = 'day-header';
+    hdr.innerHTML = `<div class="day-emoji">${day.emoji}</div><div><div class="day-title">${day.name}</div><div class="day-subtitle">${day.date}</div></div>`;
+    sec.appendChild(hdr);
+
+    const body = document.createElement('div');
+    body.className = 'day-body';
+    body.innerHTML = `<p class="day-desc">${day.desc}</p>`;
+
+    if (day.type === 'donation') {
+      const grid = document.createElement('div');
+      grid.className = 'items-grid';
+      day.items.forEach(itemName => {
+        const count = state.donationSignups.filter(s=>s.dayId===day.id && s.itemName===itemName).length;
+        const card = document.createElement('div');
+        card.className = 'item-card';
+        card.innerHTML = `
+          <div class="item-name">${esc(itemName)}</div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>${count} signed up</span></div>
+            <div class="progress-bar"><div class="progress-fill${count>0?' done':''}" style="width:${Math.min(count/5,1)*100}%"></div></div>
+          </div>
+          <button class="btn-claim" onclick="openClaim({type:'donation',dayId:'${day.id}',itemName:${JSON.stringify(itemName)}})">
+            I'll Bring This!
+          </button>`;
+        grid.appendChild(card);
+      });
+      body.appendChild(grid);
+    }
+
+    if (day.type === 'flowers_and_volunteers') {
+      // Flowers
+      const fd = document.createElement('div');
+      fd.innerHTML = '<div class="section-divider">🌷 Donate Flowers</div>';
+      const fg = document.createElement('div');
+      fg.className = 'items-grid';
+      day.flowerOptions.forEach(opt => {
+        const count = state.donationSignups.filter(s=>s.dayId===day.id && s.itemName===opt).length;
+        const card = document.createElement('div');
+        card.className = 'item-card';
+        card.innerHTML = `
+          <div class="item-name">🌸 ${esc(opt)}</div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>${count} signed up</span></div>
+            <div class="progress-bar"><div class="progress-fill${count>0?' done':''}" style="width:${Math.min(count/3,1)*100}%"></div></div>
+          </div>
+          <button class="btn-claim" onclick="openClaim({type:'donation',dayId:'tue',itemName:${JSON.stringify(opt)}})">I'll Donate!</button>`;
+        fg.appendChild(card);
+      });
+      fd.appendChild(fg);
+      body.appendChild(fd);
+
+      // Volunteers
+      const vd = document.createElement('div');
+      vd.innerHTML = '<div class="section-divider">🙋 Volunteer Slots</div>';
+      const vg = document.createElement('div');
+      vg.className = 'volunteer-grid';
+      day.volunteerRoles.forEach(role => {
+        const count = state.volunteerSignups.filter(s=>s.roleId===role.id).length;
+        const isFull = count >= role.slots;
+        const card = document.createElement('div');
+        card.className = 'vol-card'+(isFull?' full':'');
+        card.innerHTML = `
+          <div class="vol-role">${esc(role.role)}</div>
+          <div class="vol-time">⏰ ${role.time} · ${count}/${role.slots} signed up</div>
+          <button class="btn-claim" ${isFull?'disabled':''} onclick="openClaim({type:'volunteer',roleId:'${role.id}',roleName:${JSON.stringify(role.role)},time:${JSON.stringify(role.time)}})">
+            ${isFull ? '✓ Full' : 'Volunteer!'}
+          </button>`;
+        vg.appendChild(card);
+      });
+      vd.appendChild(vg);
+      body.appendChild(vd);
+    }
+
+    if (day.type === 'info') {
+      const info = document.createElement('div');
+      info.className = 'info-day';
+      info.innerHTML = `<div class="info-icon">${day.emoji}</div><p>${day.desc}</p>`;
+      body.innerHTML = '';
+      body.appendChild(info);
+    }
+
+    sec.appendChild(body);
+    dl.appendChild(sec);
+  });
+}
+
+function renderAdmin() {
+  const totalDon = state.donationSignups.length;
+  const totalVol = state.volunteerSignups.length;
+  const uniqueParents = new Set([
+    ...state.donationSignups.map(s=>s.email),
+    ...state.volunteerSignups.map(s=>s.email)
+  ]).size;
+  document.getElementById('statsBar').innerHTML = `
+    <div class="stat-box"><div class="num">${totalDon}</div><div class="lbl">Donation Signups</div></div>
+    <div class="stat-box"><div class="num">${totalVol}</div><div class="lbl">Volunteers</div></div>
+    <div class="stat-box"><div class="num">${uniqueParents}</div><div class="lbl">Unique Parents</div></div>
+    <div class="stat-box"><div class="num">${totalDon+totalVol}</div><div class="lbl">Total Commitments</div></div>`;
+
+  // Donation signups
+  const db = document.getElementById('donationSignupsBody');
+  db.innerHTML = '';
+  if (!state.donationSignups.length) {
+    db.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--text-light)">No signups yet</td></tr>';
+  } else {
+    state.donationSignups.forEach(s => {
+      const day = DAYS.find(d=>d.id===s.dayId);
+      const tagCls = s.dayId==='mon'?'tag-mon':s.dayId==='tue'?'tag-tue':'tag-wed';
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${esc(s.name)}</td><td>${esc(s.email)}</td><td>${esc(s.itemName)}</td><td><span class="tag ${tagCls}">${day?day.name:''}</span></td><td style="color:var(--text-mid)">${esc(s.notes||'—')}</td>`;
+      db.appendChild(tr);
+    });
+  }
+
+  // Volunteer signups
+  const vb = document.getElementById('volunteerSignupsBody');
+  vb.innerHTML = '';
+  if (!state.volunteerSignups.length) {
+    vb.innerHTML = '<tr><td colspan="3" style="text-align:center;padding:20px;color:var(--text-light)">No volunteers yet</td></tr>';
+  } else {
+    state.volunteerSignups.forEach(s => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${esc(s.name)}</td><td>${esc(s.email)}</td><td>${esc(s.roleName)}</td>`;
+      vb.appendChild(tr);
+    });
+  }
+
+  // Item status
+  const ib = document.getElementById('itemStatusBody');
+  ib.innerHTML = '';
+  DAYS.filter(d=>d.type==='donation'||d.type==='flowers_and_volunteers').forEach(day => {
+    const items = day.type==='donation' ? day.items : day.flowerOptions;
+    items.forEach(itemName => {
+      const count = state.donationSignups.filter(s=>s.dayId===day.id && s.itemName===itemName).length;
+      const tagCls = day.id==='mon'?'tag-mon':day.id==='tue'?'tag-tue':'tag-wed';
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${esc(itemName)}</td><td><span class="tag ${tagCls}">${day.name}</span></td><td style="font-weight:600;color:${count>0?'var(--green)':'var(--text-light)'}">${count > 0 ? count+' signed up' : 'None yet'}</td>`;
+      ib.appendChild(tr);
+    });
+  });
+}
+
+// ── CLAIM / VOLUNTEER ──
+function openClaim(ctx) {
+  claimCtx = ctx;
+  if (ctx.type === 'donation') {
+    document.getElementById('claimItemName').textContent = ctx.itemName;
+    const day = DAYS.find(d=>d.id===ctx.dayId);
+    document.getElementById('claimItemSub').textContent = day ? day.name+' · '+day.date : '';
+    document.getElementById('claimQtyField').style.display = 'block';
+    document.getElementById('claimNotes').value = '';
+    document.getElementById('claimName').value = '';
+    document.getElementById('claimEmail').value = '';
+    document.getElementById('claimModal').classList.add('open');
+  } else {
+    document.getElementById('volRoleName').textContent = ctx.roleName;
+    document.getElementById('volRoleSub').textContent = '⏰ '+ctx.time+' — Tuesday, May 5';
+    document.getElementById('volName').value = '';
+    document.getElementById('volEmail').value = '';
+    document.getElementById('volModal').classList.add('open');
+  }
+}
+
+function submitClaim() {
+  const name = document.getElementById('claimName').value.trim();
+  const email = document.getElementById('claimEmail').value.trim();
+  const notes = document.getElementById('claimNotes').value.trim();
+  if (!name || !email) { showToast('Please enter your name and email'); return; }
+  if (!email.includes('@')) { showToast('Please enter a valid email'); return; }
+  const dup = state.donationSignups.find(s=>s.email.toLowerCase()===email.toLowerCase()&&s.itemName===claimCtx.itemName&&s.dayId===claimCtx.dayId);
+  if (dup) { showToast("You've already signed up for this item!"); closeModal('claimModal'); return; }
+  state.donationSignups.push({ id:'d'+Date.now(), name, email, itemName: claimCtx.itemName, dayId: claimCtx.dayId, notes, ts: Date.now() });
+  saveState(); closeModal('claimModal'); render();
+  showToast('🎉 Thank you for signing up!');
+}
+
+function submitVol() {
+  const name = document.getElementById('volName').value.trim();
+  const email = document.getElementById('volEmail').value.trim();
+  if (!name || !email) { showToast('Please enter your name and email'); return; }
+  if (!email.includes('@')) { showToast('Please enter a valid email'); return; }
+  const dup = state.volunteerSignups.find(s=>s.email.toLowerCase()===email.toLowerCase()&&s.roleId===claimCtx.roleId);
+  if (dup) { showToast("You've already signed up for this slot!"); closeModal('volModal'); return; }
+  state.volunteerSignups.push({ id:'v'+Date.now(), name, email, roleId: claimCtx.roleId, roleName: claimCtx.roleName, ts: Date.now() });
+  saveState(); closeModal('volModal'); render();
+  showToast('🌟 Thanks for volunteering!');
+}
+
+// ── ADMIN GATE ──
+function showAdminGate() {
+  if (adminUnlocked) { switchTab('admin'); return; }
+  switchView('adminGate');
+  document.getElementById('passcodeInput').value = '';
+  document.getElementById('passcodeError').style.display = 'none';
+}
+
+function tryUnlock() {
+  const val = document.getElementById('passcodeInput').value;
+  if (val === state.passcode) {
+    adminUnlocked = true;
+    document.getElementById('tab-admin').style.display = '';
+    document.getElementById('headerActions').innerHTML = `<button class="btn-ghost" onclick="switchTab('parent')">← Parent View</button><button class="btn-logout" onclick="lockAdmin()">Lock</button>`;
+    switchTab('admin');
+    renderAdmin();
+  } else {
+    document.getElementById('passcodeError').style.display = 'block';
+    document.getElementById('passcodeInput').value = '';
+    document.getElementById('passcodeInput').focus();
+  }
+}
+
+function lockAdmin() {
+  adminUnlocked = false;
+  document.getElementById('tab-admin').style.display = 'none';
+  document.getElementById('headerActions').innerHTML = `<button class="btn-ghost" onclick="showAdminGate()">⚙ Admin</button>`;
+  switchTab('parent');
+}
+
+function changePasscode() {
+  const np = document.getElementById('newPasscode').value;
+  const cp = document.getElementById('confirmPasscode').value;
+  if (!np) { showToast('Please enter a new passcode'); return; }
+  if (np !== cp) { showToast('Passcodes do not match'); return; }
+  if (np.length < 6) { showToast('Passcode must be at least 6 characters'); return; }
+  state.passcode = np;
+  saveState();
+  document.getElementById('newPasscode').value = '';
+  document.getElementById('confirmPasscode').value = '';
+  showToast('✓ Passcode updated successfully');
+}
+
+// ── NAV ──
+function switchTab(tab) {
+  ['parent','adminGate','admin'].forEach(v => {
+    document.getElementById('view-'+v).style.display = 'none';
+  });
+  document.getElementById('view-'+tab).style.display = 'block';
+  ['parent','admin'].forEach(t => {
+    const el = document.getElementById('tab-'+t);
+    if (el) el.className = 'tab'+(t===tab?' active':'');
+  });
+}
+
+function switchView(v) {
+  ['parent','adminGate','admin'].forEach(id => {
+    document.getElementById('view-'+id).style.display = 'none';
+  });
+  document.getElementById('view-'+v).style.display = 'block';
+}
+
+// ── UTILS ──
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 3200);
+}
+
+function mkEl(tag, cls, text) {
+  const e = document.createElement(tag);
+  e.className = cls; e.textContent = text; return e;
+}
+
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+document.querySelectorAll('.modal-bg').forEach(m => {
+  m.addEventListener('click', e => { if(e.target===m) m.classList.remove('open'); });
+});
+
+loadState();
+
+// ── XLSX EXPORT ──
+function exportToXlsx() {
+  if (!state.donationSignups.length && !state.volunteerSignups.length) {
+    showToast('No signups to export yet'); return;
+  }
+
+  const wb = XLSX.utils.book_new();
+
+  // Sheet 1: Donation Signups
+  const donRows = [['Name', 'Email', 'Item', 'Event', 'Notes', 'Signed Up At']];
+  state.donationSignups.forEach(s => {
+    const day = DAYS.find(d => d.id === s.dayId);
+    donRows.push([
+      s.name, s.email, s.itemName,
+      day ? day.name : '',
+      s.notes || '',
+      s.ts ? new Date(s.ts).toLocaleString() : ''
+    ]);
+  });
+  const ws1 = XLSX.utils.aoa_to_sheet(donRows);
+  ws1['!cols'] = [22,28,28,24,28,20].map(w => ({ wch: w }));
+  XLSX.utils.book_append_sheet(wb, ws1, 'Donation Signups');
+
+  // Sheet 2: Volunteer Signups
+  const volRows = [['Name', 'Email', 'Role', 'Time', 'Signed Up At']];
+  state.volunteerSignups.forEach(s => {
+    volRows.push([
+      s.name, s.email, s.roleName, s.time || '',
+      s.ts ? new Date(s.ts).toLocaleString() : ''
+    ]);
+  });
+  const ws2 = XLSX.utils.aoa_to_sheet(volRows);
+  ws2['!cols'] = [22,28,28,18,20].map(w => ({ wch: w }));
+  XLSX.utils.book_append_sheet(wb, ws2, 'Volunteer Signups');
+
+  // Sheet 3: Item Status Summary
+  const statusRows = [['Item', 'Event', 'Total Signups']];
+  DAYS.forEach(day => {
+    if (day.type === 'info') return;
+    const items = day.items || [];
+    items.forEach(itemName => {
+      const count = state.donationSignups.filter(s => s.dayId === day.id && s.itemName === itemName).length;
+      statusRows.push([itemName, day.name, count]);
+    });
+  });
+  const ws3 = XLSX.utils.aoa_to_sheet(statusRows);
+  ws3['!cols'] = [30,24,16].map(w => ({ wch: w }));
+  XLSX.utils.book_append_sheet(wb, ws3, 'Item Status');
+
+  const date = new Date().toISOString().slice(0,10);
+  XLSX.writeFile(wb, 'Merryhill-Appreciation-Signups-' + date + '.xlsx');
+  showToast('✓ Export downloaded!');
+}
+</script>
+
+
+</body></html>
