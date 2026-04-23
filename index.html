@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<!-- saved from url=(0063)file:///Users/lking/Downloads/merryhill-appreciation-app_3.html -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<html lang="en">
+<head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Merryhill Teacher Appreciation Week</title>
-<link href="./Merryhill Teacher Appreciation Week_files/css2" rel="stylesheet">
-<script src="./Merryhill Teacher Appreciation Week_files/xlsx.full.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
   :root {
     --space: #1a1a2e;
@@ -159,6 +159,16 @@
   .btn-export { display: inline-flex; align-items: center; gap: 7px; padding: 9px 20px; border-radius: 22px; border: none; background: #27ae60; color: white; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
   .btn-export:hover { background: #219653; }
   .section-divider { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-light); margin: 20px 0 10px; }
+  /* ZERO SIGNUP HIGHLIGHT */
+  .item-card.needs-help { border-color: #f5a623; background: #fffdf5; }
+  .item-card.needs-help:hover { border-color: #e8940a; }
+  .needs-help-badge { display: inline-block; background: #fff3cd; color: #856404; border: 1px solid #ffd56b; border-radius: 10px; font-size: 10px; font-weight: 700; padding: 2px 8px; margin-bottom: 8px; letter-spacing: 0.3px; }
+  /* COMMITMENT LIST */
+  .commitment-list { margin: 6px 0 10px; padding: 0; list-style: none; }
+  .commitment-list li { font-size: 11px; color: var(--text-mid); padding: 3px 0; border-bottom: 1px dashed var(--cloud); line-height: 1.4; }
+  .commitment-list li:last-child { border: none; }
+  .commitment-count { font-size: 12px; font-weight: 600; color: var(--green); margin-bottom: 4px; }
+  .commitment-count.zero { color: var(--text-light); font-weight: 400; font-style: italic; }
 
   /* RESOURCE LINKS BANNER */
   .resource-banner {
@@ -190,7 +200,7 @@
 <body>
 
 <header>
-  <div class="stars" id="starsEl"><div class="star-dot" style="width: 2.64322px; height: 2.64322px; top: 79.2347%; left: 78.3386%; animation-delay: 1.44139s;"></div><div class="star-dot" style="width: 2.14596px; height: 2.14596px; top: 54.786%; left: 62.9234%; animation-delay: 0.293347s;"></div><div class="star-dot" style="width: 1.92841px; height: 1.92841px; top: 63.812%; left: 94.7254%; animation-delay: 0.142828s;"></div><div class="star-dot" style="width: 1.58992px; height: 1.58992px; top: 5.99092%; left: 16.7768%; animation-delay: 1.60063s;"></div><div class="star-dot" style="width: 1.23408px; height: 1.23408px; top: 52.4419%; left: 87.2219%; animation-delay: 2.93973s;"></div><div class="star-dot" style="width: 2.55164px; height: 2.55164px; top: 98.6338%; left: 40.9423%; animation-delay: 1.31099s;"></div><div class="star-dot" style="width: 2.12324px; height: 2.12324px; top: 89.3024%; left: 89.1032%; animation-delay: 1.87239s;"></div><div class="star-dot" style="width: 2.92008px; height: 2.92008px; top: 20.5167%; left: 24.6975%; animation-delay: 1.53914s;"></div><div class="star-dot" style="width: 1.08399px; height: 1.08399px; top: 70.0613%; left: 63.5367%; animation-delay: 2.74107s;"></div><div class="star-dot" style="width: 1.60522px; height: 1.60522px; top: 11.94%; left: 63.5392%; animation-delay: 2.50922s;"></div><div class="star-dot" style="width: 1.9269px; height: 1.9269px; top: 39.1214%; left: 26.7196%; animation-delay: 0.0221436s;"></div><div class="star-dot" style="width: 2.58728px; height: 2.58728px; top: 92.6024%; left: 86.5396%; animation-delay: 0.010554s;"></div><div class="star-dot" style="width: 2.84951px; height: 2.84951px; top: 9.58598%; left: 94.8816%; animation-delay: 1.36565s;"></div><div class="star-dot" style="width: 2.58178px; height: 2.58178px; top: 4.42735%; left: 0.576344%; animation-delay: 1.93318s;"></div><div class="star-dot" style="width: 1.01604px; height: 1.01604px; top: 81.1637%; left: 19.8102%; animation-delay: 1.59135s;"></div><div class="star-dot" style="width: 2.70126px; height: 2.70126px; top: 74.0601%; left: 94.8319%; animation-delay: 0.559607s;"></div><div class="star-dot" style="width: 2.23052px; height: 2.23052px; top: 22.6502%; left: 5.19022%; animation-delay: 2.87871s;"></div><div class="star-dot" style="width: 2.18967px; height: 2.18967px; top: 34.1655%; left: 88.5927%; animation-delay: 2.8296s;"></div><div class="star-dot" style="width: 1.77334px; height: 1.77334px; top: 91.0904%; left: 66.6344%; animation-delay: 2.70107s;"></div><div class="star-dot" style="width: 2.10997px; height: 2.10997px; top: 79.9804%; left: 53.5185%; animation-delay: 1.71924s;"></div><div class="star-dot" style="width: 2.67109px; height: 2.67109px; top: 99.9734%; left: 52.5971%; animation-delay: 1.50768s;"></div><div class="star-dot" style="width: 1.87424px; height: 1.87424px; top: 41.1309%; left: 95.5854%; animation-delay: 0.424843s;"></div><div class="star-dot" style="width: 1.02269px; height: 1.02269px; top: 25.7931%; left: 28.5117%; animation-delay: 1.30426s;"></div><div class="star-dot" style="width: 2.421px; height: 2.421px; top: 96.2891%; left: 48.6184%; animation-delay: 0.350244s;"></div><div class="star-dot" style="width: 1.61199px; height: 1.61199px; top: 46.5394%; left: 31.5393%; animation-delay: 0.818062s;"></div><div class="star-dot" style="width: 1.49304px; height: 1.49304px; top: 65.7375%; left: 56.5061%; animation-delay: 1.64502s;"></div><div class="star-dot" style="width: 2.69275px; height: 2.69275px; top: 17.3601%; left: 33.7865%; animation-delay: 0.332599s;"></div><div class="star-dot" style="width: 2.29214px; height: 2.29214px; top: 71.5019%; left: 45.2526%; animation-delay: 1.39998s;"></div><div class="star-dot" style="width: 1.09808px; height: 1.09808px; top: 21.59%; left: 4.29362%; animation-delay: 0.350463s;"></div><div class="star-dot" style="width: 1.3187px; height: 1.3187px; top: 80.0159%; left: 63.6297%; animation-delay: 1.48866s;"></div></div>
+  <div class="stars" id="starsEl"></div>
   <div class="header-inner">
     <div class="school-logo">🚀</div>
     <div class="header-text">
@@ -204,8 +214,8 @@
 </header>
 
 <div class="tab-bar" id="tabBar">
-  <div class="tab active" id="tab-parent" onclick="switchTab(&#39;parent&#39;)">Sign Up to Help</div>
-  <div class="tab" id="tab-admin" style="display:none" onclick="switchTab(&#39;admin&#39;)">Admin Dashboard</div>
+  <div class="tab active" id="tab-parent" onclick="switchTab('parent')">Sign Up to Help</div>
+  <div class="tab" id="tab-admin" style="display:none" onclick="switchTab('admin')">Admin Dashboard</div>
 </div>
 
 <!-- PARENT VIEW -->
@@ -226,209 +236,8 @@
     </div>
   </div>
 
-  <div class="event-filter" id="eventFilter"><div class="pill active">All Days</div><div class="pill">☕ Cosmic Coffee Breakfast</div><div class="pill">🌸 Astro Arrangements</div><div class="pill">🍬 Solar Sweets Snack Bar</div><div class="pill">🌙 Lunar Lunch</div><div class="pill">🎁 Galactic Goodie Bags</div></div>
-  <div id="daysList"><div class="day-section"><div class="day-header"><div class="day-emoji">☕</div><div><div class="day-title">Cosmic Coffee Breakfast</div><div class="day-subtitle">Monday, May 4</div></div></div><div class="day-body"><p class="day-desc">We're hosting breakfast in the lounge for ~55 employees. All quantities welcome — donate as much or as little as you'd like! Donations must be dropped off in the front office by 8:30AM on Monday, 5/4.</p><div class="items-grid"><div class="item-card">
-          <div class="item-name">Donuts</div>
-          <div class="progress-wrap">
-            <div class="progress-label"><span>0 signed up</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-          </div>
-          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;mon&#39;,itemName:" donuts"})"="">
-            I'll Bring This!
-          </button></div><div class="item-card">
-          <div class="item-name">Bagels &amp; Cream Cheese</div>
-          <div class="progress-wrap">
-            <div class="progress-label"><span>0 signed up</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-          </div>
-          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;mon&#39;,itemName:" bagels="" &="" cream="" cheese"})"="">
-            I'll Bring This!
-          </button></div><div class="item-card">
-          <div class="item-name">Danishes / Pastries / Croissants</div>
-          <div class="progress-wrap">
-            <div class="progress-label"><span>0 signed up</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-          </div>
-          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;mon&#39;,itemName:" danishes="" pastries="" croissants"})"="">
-            I'll Bring This!
-          </button></div><div class="item-card">
-          <div class="item-name">Muffins</div>
-          <div class="progress-wrap">
-            <div class="progress-label"><span>0 signed up</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-          </div>
-          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;mon&#39;,itemName:" muffins"})"="">
-            I'll Bring This!
-          </button></div><div class="item-card">
-          <div class="item-name">Fruit</div>
-          <div class="progress-wrap">
-            <div class="progress-label"><span>0 signed up</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-          </div>
-          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;mon&#39;,itemName:" fruit"})"="">
-            I'll Bring This!
-          </button></div><div class="item-card">
-          <div class="item-name">Juice</div>
-          <div class="progress-wrap">
-            <div class="progress-label"><span>0 signed up</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-          </div>
-          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;mon&#39;,itemName:" juice"})"="">
-            I'll Bring This!
-          </button></div><div class="item-card">
-          <div class="item-name">Yogurt &amp; Granola (for parfaits)</div>
-          <div class="progress-wrap">
-            <div class="progress-label"><span>0 signed up</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-          </div>
-          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;mon&#39;,itemName:" yogurt="" &="" granola="" (for="" parfaits)"})"="">
-            I'll Bring This!
-          </button></div><div class="item-card">
-          <div class="item-name">Coffee</div>
-          <div class="progress-wrap">
-            <div class="progress-label"><span>0 signed up</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-          </div>
-          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;mon&#39;,itemName:" coffee"})"="">
-            I'll Bring This!
-          </button></div></div></div></div><div class="day-section"><div class="day-header"><div class="day-emoji">🌸</div><div><div class="day-title">Astro Arrangements</div><div class="day-subtitle">Tuesday, May 5</div></div></div><div class="day-body"><p class="day-desc">Students will build a floral arrangement for each staff member from 7:45–8:30AM in the gym. We need flower donations and parent volunteers! Florists often discount or donate flowers for school events — mention it when you call. Donations may be dropped off Monday afternoon/evening or Tuesday morning by 7:45AM.</p><div><div class="section-divider">🌷 Donate Flowers</div><div class="items-grid"><div class="item-card">
-          <div class="item-name">🌸 1–2 dozen stems</div>
-          <div class="progress-wrap">
-            <div class="progress-label"><span>0 signed up</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-          </div>
-          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;tue&#39;,itemName:" 1–2="" dozen="" stems"})"="">I'll Donate!</button></div><div class="item-card">
-          <div class="item-name">🌸 2–4 dozen stems</div>
-          <div class="progress-wrap">
-            <div class="progress-label"><span>0 signed up</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-          </div>
-          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;tue&#39;,itemName:" 2–4="" dozen="" stems"})"="">I'll Donate!</button></div><div class="item-card">
-          <div class="item-name">🌸 4–6 dozen stems</div>
-          <div class="progress-wrap">
-            <div class="progress-label"><span>0 signed up</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-          </div>
-          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;tue&#39;,itemName:" 4–6="" dozen="" stems"})"="">I'll Donate!</button></div></div></div><div><div class="section-divider">🙋 Volunteer Slots</div><div class="volunteer-grid"><div class="vol-card">
-          <div class="vol-role">Setup Help</div>
-          <div class="vol-time">⏰ 7:30–7:45AM · 0/4 signed up</div>
-          <button class="btn-claim" onclick="openClaim({type:&#39;volunteer&#39;,roleId:&#39;v1&#39;,roleName:" setup="" help",time:"7:30–7:45am"})"="">
-            Volunteer!
-          </button></div><div class="vol-card">
-          <div class="vol-role">Assist Students with Arranging</div>
-          <div class="vol-time">⏰ 7:45–8:30AM · 0/6 signed up</div>
-          <button class="btn-claim" onclick="openClaim({type:&#39;volunteer&#39;,roleId:&#39;v2&#39;,roleName:" assist="" students="" with="" arranging",time:"7:45–8:30am"})"="">
-            Volunteer!
-          </button></div><div class="vol-card">
-          <div class="vol-role">Cleanup Crew</div>
-          <div class="vol-time">⏰ 8:30–8:45AM · 0/4 signed up</div>
-          <button class="btn-claim" onclick="openClaim({type:&#39;volunteer&#39;,roleId:&#39;v3&#39;,roleName:" cleanup="" crew",time:"8:30–8:45am"})"="">
-            Volunteer!
-          </button></div></div></div></div></div><div class="day-section"><div class="day-header"><div class="day-emoji">🍬</div><div><div class="day-title">Solar Sweets Snack Bar</div><div class="day-subtitle">Wednesday, May 6</div></div></div><div class="day-body"><p class="day-desc">A themed snack bar in the lounge for ~55 employees! All quantities welcome. Donations must be dropped off in the front office by 6:00PM on Tuesday, 5/5. Some items are available on the Amazon wish list.</p><div class="items-grid"><div class="item-card">
-          <div class="item-name">Milky Way candy 🌌</div>
-          <div class="progress-wrap">
-            <div class="progress-label"><span>0 signed up</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-          </div>
-          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;wed&#39;,itemName:" milky="" way="" candy="" 🌌"})"="">
-            I'll Bring This!
-          </button></div><div class="item-card">
-          <div class="item-name">Starbursts ⭐</div>
-          <div class="progress-wrap">
-            <div class="progress-label"><span>0 signed up</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-          </div>
-          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;wed&#39;,itemName:" starbursts="" ⭐"})"="">
-            I'll Bring This!
-          </button></div><div class="item-card">
-          <div class="item-name">Mars Bars 🪐</div>
-          <div class="progress-wrap">
-            <div class="progress-label"><span>0 signed up</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-          </div>
-          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;wed&#39;,itemName:" mars="" bars="" 🪐"})"="">
-            I'll Bring This!
-          </button></div><div class="item-card">
-          <div class="item-name">Cheeseballs (Spaceballs) 🧀</div>
-          <div class="progress-wrap">
-            <div class="progress-label"><span>0 signed up</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-          </div>
-          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;wed&#39;,itemName:" cheeseballs="" (spaceballs)="" 🧀"})"="">
-            I'll Bring This!
-          </button></div><div class="item-card">
-          <div class="item-name">Fruit Kabobs (Rockets) 🍓</div>
-          <div class="progress-wrap">
-            <div class="progress-label"><span>0 signed up</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-          </div>
-          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;wed&#39;,itemName:" fruit="" kabobs="" (rockets)="" 🍓"})"="">
-            I'll Bring This!
-          </button></div><div class="item-card">
-          <div class="item-name">Moon Pies 🌙</div>
-          <div class="progress-wrap">
-            <div class="progress-label"><span>0 signed up</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-          </div>
-          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;wed&#39;,itemName:" moon="" pies="" 🌙"})"="">
-            I'll Bring This!
-          </button></div><div class="item-card">
-          <div class="item-name">Peach Rings (Saturn's Rings) 🪐</div>
-          <div class="progress-wrap">
-            <div class="progress-label"><span>0 signed up</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-          </div>
-          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;wed&#39;,itemName:" peach="" rings="" (saturn's="" rings)="" 🪐"})"="">
-            I'll Bring This!
-          </button></div><div class="item-card">
-          <div class="item-name">Gummy Worms (Space Worms) 🪱</div>
-          <div class="progress-wrap">
-            <div class="progress-label"><span>0 signed up</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-          </div>
-          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;wed&#39;,itemName:" gummy="" worms="" (space="" worms)="" 🪱"})"="">
-            I'll Bring This!
-          </button></div><div class="item-card">
-          <div class="item-name">Chocolate Mini Donuts (Black Holes) 🍩</div>
-          <div class="progress-wrap">
-            <div class="progress-label"><span>0 signed up</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-          </div>
-          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;wed&#39;,itemName:" chocolate="" mini="" donuts="" (black="" holes)="" 🍩"})"="">
-            I'll Bring This!
-          </button></div><div class="item-card">
-          <div class="item-name">Sour Candy Belts (Astro Belts) 🛸</div>
-          <div class="progress-wrap">
-            <div class="progress-label"><span>0 signed up</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-          </div>
-          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;wed&#39;,itemName:" sour="" candy="" belts="" (astro="" belts)="" 🛸"})"="">
-            I'll Bring This!
-          </button></div><div class="item-card">
-          <div class="item-name">Caramel Corn / Choc. Popcorn (Asteroids) 🍿</div>
-          <div class="progress-wrap">
-            <div class="progress-label"><span>0 signed up</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-          </div>
-          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;wed&#39;,itemName:" caramel="" corn="" choc.="" popcorn="" (asteroids)="" 🍿"})"="">
-            I'll Bring This!
-          </button></div><div class="item-card">
-          <div class="item-name">Orbit Gum 🌍</div>
-          <div class="progress-wrap">
-            <div class="progress-label"><span>0 signed up</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-          </div>
-          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;wed&#39;,itemName:" orbit="" gum="" 🌍"})"="">
-            I'll Bring This!
-          </button></div><div class="item-card">
-          <div class="item-name">Pop Rocks 💥</div>
-          <div class="progress-wrap">
-            <div class="progress-label"><span>0 signed up</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-          </div>
-          <button class="btn-claim" onclick="openClaim({type:&#39;donation&#39;,dayId:&#39;wed&#39;,itemName:" pop="" rocks="" 💥"})"="">
-            I'll Bring This!
-          </button></div></div></div></div><div class="day-section"><div class="day-header"><div class="day-emoji">🌙</div><div><div class="day-title">Lunar Lunch</div><div class="day-subtitle">Thursday, May 7</div></div></div><div class="day-body"><div class="info-day"><div class="info-icon">🌙</div><p>Staff will enjoy a catered Lunar Lunch! Donations aren't needed for this event, but if you'd like to contribute, drop cash or a check at the front desk — funds will be used to purchase lunch for our amazing staff. 💛</p></div></div></div><div class="day-section"><div class="day-header"><div class="day-emoji">🎁</div><div><div class="day-title">Galactic Goodie Bags</div><div class="day-subtitle">Friday, May 8</div></div></div><div class="day-body"><div class="info-day"><div class="info-icon">🎁</div><p>Each staff member will receive a goodie bag filled with treats! Stop by the round couch anytime during the week to drop gift cards and small treats into labeled tote bags — these will be delivered Friday afternoon. Large or heavy items are best given directly to the staff member. Want to contribute cash? Drop it at the front desk and it'll be used to "back fill" bags so every staff member gets something special! 🚀</p></div></div></div></div>
+  <div class="event-filter" id="eventFilter"></div>
+  <div id="daysList"></div>
 </div>
 
 <!-- ADMIN GATE -->
@@ -437,7 +246,7 @@
     <div class="lock">🔐</div>
     <h2>Admin Access</h2>
     <p>Enter the admin passcode to manage events, items, and view signups.</p>
-    <input type="password" class="passcode-input" id="passcodeInput" placeholder="••••••" onkeydown="if(event.key===&#39;Enter&#39;)tryUnlock()">
+    <input type="password" class="passcode-input" id="passcodeInput" placeholder="••••••" onkeydown="if(event.key==='Enter')tryUnlock()">
     <button class="btn-unlock" onclick="tryUnlock()">Unlock Dashboard</button>
     <div class="passcode-error" id="passcodeError">Incorrect passcode. Please try again.</div>
     <p style="margin-top:20px;font-size:12px;color:var(--text-light)">Contact your school coordinator for access.</p>
@@ -448,7 +257,7 @@
 <div id="view-admin" class="main" style="display:none">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px;">
     <div>
-      <div style="font-family:&#39;Playfair Display&#39;,serif;font-size:22px;font-weight:700;">Admin Dashboard</div>
+      <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;">Admin Dashboard</div>
       <div style="font-size:13px;color:var(--text-light);margin-top:2px;">Merryhill Midtown · Teacher Appreciation Week</div>
     </div>
     <button class="btn-export" onclick="exportToXlsx()">⬇ Export Signups (.xlsx)</button>
@@ -503,7 +312,7 @@
     <div class="field"><label>Email Address *</label><input type="email" id="claimEmail" placeholder="jane@email.com"></div>
     <div class="field" id="claimQtyField" style="display:none"><label>Quantity / Details</label><textarea id="claimNotes" placeholder="e.g. 2 dozen glazed donuts"></textarea></div>
     <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeModal(&#39;claimModal&#39;)">Cancel</button>
+      <button class="btn-cancel" onclick="closeModal('claimModal')">Cancel</button>
       <button class="btn-submit" onclick="submitClaim()">Confirm Sign Up ✓</button>
     </div>
   </div>
@@ -518,7 +327,7 @@
     <div class="field"><label>Your Name *</label><input type="text" id="volName" placeholder="Jane Smith"></div>
     <div class="field"><label>Email Address *</label><input type="email" id="volEmail" placeholder="jane@email.com"></div>
     <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeModal(&#39;volModal&#39;)">Cancel</button>
+      <button class="btn-cancel" onclick="closeModal('volModal')">Cancel</button>
       <button class="btn-submit" onclick="submitVol()">Sign Up to Volunteer ✓</button>
     </div>
   </div>
@@ -575,10 +384,47 @@ const DAYS = [
   }
 ];
 
+// Pre-seeded from existing Google Form responses (imported 4/23/2025)
+const SEEDED_DONATIONS = [
+  // MONDAY
+  {id:'s1', name:'Jean Hurst', email:'jk-hurst@att.net', dayId:'mon', itemName:'Danishes / Pastries / Croissants', notes:'2 dozen cinnamon rolls', ts:0, seeded:true},
+  {id:'s2', name:'Angela Mamangun', email:'angela.l.mamangun@gmail.com', dayId:'mon', itemName:'Bagels & Cream Cheese', notes:'2 dozen Noah\'s bagels', ts:0, seeded:true},
+  {id:'s3', name:'Angela Mamangun', email:'angela.l.mamangun@gmail.com', dayId:'mon', itemName:'Coffee', notes:'2 coffee boxes', ts:0, seeded:true},
+  {id:'s4', name:'Melissa Chechourka', email:'melifig88@gmail.com', dayId:'mon', itemName:'Yogurt & Granola (for parfaits)', notes:'2 lg containers yogurt, 2 bags granola', ts:0, seeded:true},
+  {id:'s5', name:'Jane Allen', email:'Janeswierzbin06@gmail.com', dayId:'mon', itemName:'Muffins', notes:'', ts:0, seeded:true},
+  {id:'s6', name:'Camille Binon', email:'camillerasmussen@hotmail.com', dayId:'mon', itemName:'Danishes / Pastries / Croissants', notes:'1 dozen', ts:0, seeded:true},
+  {id:'s7', name:'Hilda Watterson', email:'Wattersonhilda@gmail.com', dayId:'mon', itemName:'Donuts', notes:'2 dozen', ts:0, seeded:true},
+  {id:'s8', name:'Alicia Boomer', email:'alicia.boomer@gmail.com', dayId:'mon', itemName:'Other: Staxx Bread', notes:'', ts:0, seeded:true},
+  {id:'s9', name:'Phil Arthur', email:'Phil_arthur23@yahoo.com', dayId:'mon', itemName:'Bagels & Cream Cheese', notes:'Two dozen mixed bagels', ts:0, seeded:true},
+  {id:'s10', name:'Dena Skiles', email:'Denaskiles@outlook.com', dayId:'mon', itemName:'Bagels & Cream Cheese', notes:'Dozen bagels, 2 cream cheeses', ts:0, seeded:true},
+  {id:'s11', name:'Christina Amaral', email:'christina.k.amaral@gmail.com', dayId:'mon', itemName:'Danishes / Pastries / Croissants', notes:'Assortment from Costco', ts:0, seeded:true},
+  {id:'s12', name:'Christina Amaral', email:'christina.k.amaral@gmail.com', dayId:'mon', itemName:'Muffins', notes:'Assortment from Costco', ts:0, seeded:true},
+  {id:'s13', name:'Jennifer Shin', email:'Jenn_violin@yahoo.com', dayId:'mon', itemName:'Bagels & Cream Cheese', notes:'One dozen + 2 tubs cream cheese', ts:0, seeded:true},
+  {id:'s14', name:'Sophia Manuel', email:'asgee10@gmail.com', dayId:'mon', itemName:'Muffins', notes:'16 muffins — 8 blueberry, 8 chocolate', ts:0, seeded:true},
+  // TUESDAY FLOWERS
+  {id:'s15', name:'Alicia Boomer', email:'alicia.boomer@gmail.com', dayId:'tue', itemName:'1–2 dozen stems', notes:'', ts:0, seeded:true},
+  {id:'s16', name:'Dena Skiles', email:'Denaskiles@outlook.com', dayId:'tue', itemName:'1–2 dozen stems', notes:'', ts:0, seeded:true},
+  {id:'s17', name:'Marian Sheppard', email:'marian.sheppard.lmft@gmail.com', dayId:'tue', itemName:'2–4 dozen stems', notes:'', ts:0, seeded:true},
+  {id:'s18', name:'Erika Arthur', email:'Lerikalmaec@aol.com', dayId:'tue', itemName:'4–6 dozen stems', notes:'', ts:0, seeded:true},
+  // WEDNESDAY
+  {id:'s19', name:'Angela Mamangun', email:'angela.l.mamangun@gmail.com', dayId:'wed', itemName:'Starbursts ⭐', notes:'5lb bag of Starbursts', ts:0, seeded:true},
+  {id:'s20', name:'Angela Mamangun', email:'angela.l.mamangun@gmail.com', dayId:'wed', itemName:'Other: Airheads + balloon garland (from wish list)', notes:'3x18 pack airheads, 1 balloon garland pack', ts:0, seeded:true},
+  {id:'s21', name:'Melissa Chechourka', email:'melifig88@gmail.com', dayId:'wed', itemName:'Starbursts ⭐', notes:'Family size bag', ts:0, seeded:true},
+  {id:'s22', name:'Camille Binon', email:'camillerasmussen@hotmail.com', dayId:'wed', itemName:'Peach Rings (Saturn\'s Rings) 🪐', notes:'2 packages', ts:0, seeded:true},
+  {id:'s23', name:'Camille Binon', email:'camillerasmussen@hotmail.com', dayId:'wed', itemName:'Gummy Worms (Space Worms) 🪱', notes:'2 packages', ts:0, seeded:true},
+  {id:'s24', name:'Shephali Patel', email:'shephpatel@yahoo.com', dayId:'wed', itemName:'Other: Rocket Popsicles (cooler provided)', notes:'60 popsicles', ts:0, seeded:true},
+  {id:'s25', name:'Raelyn Stoffle', email:'rstoffle@earthlink.net', dayId:'wed', itemName:'Milky Way candy 🌌', notes:'2 bags', ts:0, seeded:true},
+  {id:'s26', name:'Raelyn Stoffle', email:'rstoffle@earthlink.net', dayId:'wed', itemName:'Chocolate Mini Donuts (Black Holes) 🍩', notes:'Large container of donut holes', ts:0, seeded:true},
+  {id:'s27', name:'Dena Skiles', email:'Denaskiles@outlook.com', dayId:'wed', itemName:'Gummy Worms (Space Worms) 🪱', notes:'2 value packs from Amazon wishlist', ts:0, seeded:true},
+  {id:'s28', name:'Christina Amaral', email:'christina.k.amaral@gmail.com', dayId:'wed', itemName:'Orbit Gum 🌍', notes:'14 pack from wishlist', ts:0, seeded:true},
+  {id:'s29', name:'Rebecca Rabovsky', email:'Rebecca.rabovsky@gmail.com', dayId:'wed', itemName:'Orbit Gum 🌍', notes:'12 pack', ts:0, seeded:true},
+  {id:'s30', name:'Sophia Manuel', email:'asgee10@gmail.com', dayId:'wed', itemName:'Gummy Worms (Space Worms) 🪱', notes:'4 bags gummy worms', ts:0, seeded:true},
+];
+
 let state = {
   passcode: DEFAULT_PASSCODE,
-  donationSignups: [],   // { id, name, email, itemName, dayId, notes, ts }
-  volunteerSignups: [],  // { id, name, email, roleId, roleName, ts }
+  donationSignups: [],
+  volunteerSignups: [],
 };
 
 function loadState() {
@@ -586,6 +432,11 @@ function loadState() {
     const s = localStorage.getItem('merryhillState');
     if (s) state = JSON.parse(s);
   } catch(e) {}
+  // Merge seeded signups — add any not already present (by id)
+  const existingIds = new Set(state.donationSignups.map(s => s.id));
+  SEEDED_DONATIONS.forEach(sd => {
+    if (!existingIds.has(sd.id)) state.donationSignups.push(sd);
+  });
   render();
 }
 
@@ -674,15 +525,18 @@ function renderParent() {
       const fg = document.createElement('div');
       fg.className = 'items-grid';
       day.flowerOptions.forEach(opt => {
-        const count = state.donationSignups.filter(s=>s.dayId===day.id && s.itemName===opt).length;
+        const signups = state.donationSignups.filter(s=>s.dayId===day.id && s.itemName===opt);
+        const count = signups.length;
+        const needsHelp = count === 0;
         const card = document.createElement('div');
-        card.className = 'item-card';
+        card.className = 'item-card' + (needsHelp ? ' needs-help' : '');
+        const countHTML = count === 0
+          ? '<div class="commitment-count zero">No one yet — be the first! 👋</div>'
+          : `<div class="commitment-count">${count} parent${count>1?'s':''} signed up</div>`;
         card.innerHTML = `
+          ${needsHelp ? '<div class="needs-help-badge">⚠ Still needed!</div>' : ''}
           <div class="item-name">🌸 ${esc(opt)}</div>
-          <div class="progress-wrap">
-            <div class="progress-label"><span>${count} signed up</span></div>
-            <div class="progress-bar"><div class="progress-fill${count>0?' done':''}" style="width:${Math.min(count/3,1)*100}%"></div></div>
-          </div>
+          ${countHTML}
           <button class="btn-claim" onclick="openClaim({type:'donation',dayId:'tue',itemName:${JSON.stringify(opt)}})">I'll Donate!</button>`;
         fg.appendChild(card);
       });
@@ -961,11 +815,59 @@ function exportToXlsx() {
   ws3['!cols'] = [30,24,16].map(w => ({ wch: w }));
   XLSX.utils.book_append_sheet(wb, ws3, 'Item Status');
 
+  // Sheet 4: Email Draft
+  const zeroMon = ['Fruit','Juice'].filter(item =>
+    !state.donationSignups.some(s => s.dayId==='mon' && s.itemName===item)
+  );
+  const allWedItems = ['Milky Way candy 🌌','Starbursts ⭐','Mars Bars 🪐','Cheeseballs (Spaceballs) 🧀','Fruit Kabobs (Rockets) 🍓','Moon Pies 🌙','Peach Rings (Saturn\'s Rings) 🪐','Gummy Worms (Space Worms) 🪱','Chocolate Mini Donuts (Black Holes) 🍩','Sour Candy Belts (Astro Belts) 🛸','Caramel Corn / Choc. Popcorn (Asteroids) 🍿','Orbit Gum 🌍','Pop Rocks 💥'];
+  const zeroWed = allWedItems.filter(item =>
+    !state.donationSignups.some(s => s.dayId==='wed' && s.itemName===item)
+  );
+  const volCount = state.volunteerSignups.length;
+  const monSection = zeroMon.length
+    ? `Still needed: ${zeroMon.map(i=>i.replace(/[^\w\s&\/()'-]/g,'')).join(' and ')} — no one has signed up for these yet!`
+    : 'Monday breakfast is looking great — thank you!';
+  const volSection = volCount === 0
+    ? 'Flowers are looking good — but we have ZERO volunteers signed up to help students with arrangements. We need helpers for setup (7:30AM), arranging (7:45–8:30AM), and cleanup (8:30AM). This is a wonderful way to spend a morning with your child!'
+    : `Flowers and volunteers are covered — thank you to our ${volCount} volunteer${volCount>1?'s':''}!`;
+  const wedSection = zeroWed.length
+    ? `Still needed: ${zeroWed.map(i=>i.replace(/[\u{1F300}-\u{1FFFF}]/gu,'').trim()).join(', ')} — ${zeroWed.length} item${zeroWed.length>1?'s':''} with no signups yet!`
+    : 'Wednesday snack bar is fully covered — amazing!';
+
+  const emailDraft = `Subject: Teacher Appreciation Week — We Still Need Your Help! 🚀
+
+Hi Merryhill Families,
+
+Thank you to everyone who has already signed up — we have great coverage on bagels, danishes, muffins, and gummy worms! However, we still have several gaps and would love your help filling them.
+
+🌅 MONDAY BREAKFAST (drop off by 8:30AM, May 4)
+${monSection}
+
+🌸 TUESDAY FLOWER ARRANGEMENTS (7:45–8:30AM, May 5)
+${volSection}
+
+🍬 WEDNESDAY SNACK BAR (drop off by 6PM Tuesday, May 5)
+${wedSection}
+
+Sign up here: merryhill.netlify.app
+
+Thank you for helping make this week so special for our incredible staff! 💛
+
+— The Teacher Appreciation Committee`;
+
+  const ws4 = XLSX.utils.aoa_to_sheet([
+    ['SUGGESTED PARENT EMAIL — Copy, review, and send via your usual school communication channel'],
+    [''],
+    ...emailDraft.split('\n').map(line => [line])
+  ]);
+  ws4['!cols'] = [{ wch: 90 }];
+  XLSX.utils.book_append_sheet(wb, ws4, 'Email Draft');
+
   const date = new Date().toISOString().slice(0,10);
   XLSX.writeFile(wb, 'Merryhill-Appreciation-Signups-' + date + '.xlsx');
   showToast('✓ Export downloaded!');
+
 }
 </script>
-
-
-</body></html>
+</body>
+</html>
