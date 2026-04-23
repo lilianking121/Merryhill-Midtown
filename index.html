@@ -857,10 +857,12 @@ Thank you for helping make this week so special for our incredible staff! 💛
 — The Teacher Appreciation Committee`;
 
   const ws4 = XLSX.utils.aoa_to_sheet([
-    ['SUGGESTED PARENT EMAIL — Copy, review, and send via your usual school communication channel'],
+    ['INSTRUCTIONS: Click the cell below, then copy the full text and paste into your email client.'],
     [''],
-    ...emailDraft.split('\n').map(line => [line])
+    [emailDraft]
   ]);
+  ws4['A3'].s = { alignment: { wrapText: true, vertical: 'top' } };
+  ws4['!rows'] = [{},{},{ hpt: 300 }];
   ws4['!cols'] = [{ wch: 90 }];
   XLSX.utils.book_append_sheet(wb, ws4, 'Email Draft');
 
