@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,7 +27,7 @@
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text); min-height: 100vh; }
-
+ 
   /* HEADER */
   header {
     background: linear-gradient(135deg, var(--space) 0%, var(--nebula) 100%);
@@ -44,20 +43,20 @@
   .header-actions { margin-left: auto; }
   .btn-ghost { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.25); color: white; padding: 7px 16px; border-radius: 20px; font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 500; transition: background 0.2s; }
   .btn-ghost:hover { background: rgba(255,255,255,0.2); }
-
+ 
   /* TABS */
   .tab-bar { display: flex; background: white; border-bottom: 2px solid var(--cloud); padding: 0 32px; gap: 4px; }
   .tab { padding: 14px 20px; font-size: 14px; font-weight: 500; cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; color: var(--text-light); transition: all 0.2s; }
   .tab.active { color: var(--nebula); border-bottom-color: var(--nebula); }
-
+ 
   /* MAIN */
   .main { max-width: 900px; margin: 0 auto; padding: 28px 20px; }
-
+ 
   /* EVENT PILLS */
   .event-filter { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
   .pill { padding: 7px 16px; border-radius: 20px; font-size: 13px; font-weight: 500; cursor: pointer; border: 1.5px solid var(--text-light); color: var(--text-mid); background: white; transition: all 0.18s; }
   .pill.active { background: var(--nebula); border-color: var(--nebula); color: white; }
-
+ 
   /* DAY SECTIONS */
   .day-section { margin-bottom: 32px; }
   .day-header {
@@ -70,7 +69,7 @@
   .day-subtitle { font-size: 12px; opacity: 0.75; margin-top: 2px; }
   .day-body { background: white; border: 1.5px solid var(--cloud); border-top: none; border-radius: 0 0 14px 14px; padding: 20px; }
   .day-desc { font-size: 13px; color: var(--text-mid); line-height: 1.6; margin-bottom: 18px; }
-
+ 
   /* ITEM CARDS */
   .items-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
   .item-card { background: var(--cream); border-radius: 10px; padding: 14px 16px; border: 1.5px solid var(--cloud); transition: box-shadow 0.2s, border-color 0.2s; position: relative; }
@@ -87,19 +86,19 @@
   .btn-claim { width: 100%; padding: 8px; border-radius: 7px; border: none; background: var(--nebula); color: white; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
   .btn-claim:hover { background: var(--space); }
   .btn-claim:disabled { background: var(--cloud); color: var(--text-light); cursor: not-allowed; }
-
+ 
   /* INFO DAYS */
   .info-day { background: linear-gradient(135deg, var(--gold-light), #fff8f0); border: 1.5px solid #f0d890; border-radius: 10px; padding: 18px 20px; }
   .info-day .info-icon { font-size: 28px; margin-bottom: 10px; }
   .info-day p { font-size: 13px; color: var(--text-mid); line-height: 1.6; }
-
+ 
   /* VOLUNTEER CARDS */
   .volunteer-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
   .vol-card { background: var(--aqua-pale); border: 1.5px solid var(--aqua); border-radius: 10px; padding: 14px 16px; }
   .vol-card.full { opacity: 0.5; background: var(--cloud); border-color: var(--cloud); }
   .vol-role { font-weight: 600; font-size: 13px; margin-bottom: 4px; }
   .vol-time { font-size: 11px; color: var(--text-mid); margin-bottom: 10px; }
-
+ 
   /* MODALS */
   .modal-bg { display: none; position: fixed; inset: 0; background: rgba(26,26,46,0.55); z-index: 100; align-items: center; justify-content: center; padding: 20px; }
   .modal-bg.open { display: flex; }
@@ -117,7 +116,7 @@
   .btn-cancel { flex: 1; padding: 11px; border-radius: 8px; border: 1.5px solid var(--cloud); background: white; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; color: var(--text-mid); }
   .btn-submit { flex: 2; padding: 11px; border-radius: 8px; border: none; background: var(--nebula); color: white; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
   .btn-submit:hover { background: var(--space); }
-
+ 
   /* PASSCODE SCREEN */
   .passcode-screen { text-align: center; padding: 60px 20px; max-width: 380px; margin: 0 auto; }
   .passcode-screen .lock { font-size: 48px; margin-bottom: 16px; }
@@ -128,7 +127,7 @@
   .btn-unlock { width: 100%; padding: 12px; border-radius: 10px; border: none; background: var(--nebula); color: white; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
   .btn-unlock:hover { background: var(--space); }
   .passcode-error { color: var(--star); font-size: 13px; margin-top: 8px; display: none; }
-
+ 
   /* ADMIN */
   .admin-section { margin-bottom: 36px; }
   .section-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
@@ -151,7 +150,7 @@
   .passcode-row { display: flex; gap: 10px; align-items: flex-end; }
   .passcode-row .field { flex: 1; margin: 0; }
   .btn-save-pc { padding: 10px 20px; border-radius: 8px; border: none; background: var(--nebula); color: white; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; }
-
+ 
   .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--space); color: white; padding: 12px 24px; border-radius: 30px; font-size: 14px; font-weight: 500; z-index: 200; transition: transform 0.3s ease; white-space: nowrap; }
   .toast.show { transform: translateX(-50%) translateY(0); }
   .empty-state { text-align: center; padding: 32px 20px; color: var(--text-light); }
@@ -176,7 +175,7 @@
   .commitment-list li:last-child { border: none; }
   .commitment-count { font-size: 12px; font-weight: 600; color: var(--green); margin-bottom: 4px; }
   .commitment-count.zero { color: var(--text-light); font-weight: 400; font-style: italic; }
-
+ 
   /* RESOURCE LINKS BANNER */
   .resource-banner {
     background: linear-gradient(135deg, #1a1a2e, #0f3460);
@@ -205,7 +204,7 @@
 </style>
 </head>
 <body>
-
+ 
 <header>
   <div class="stars" id="starsEl"></div>
   <div class="header-inner">
@@ -219,15 +218,15 @@
     </div>
   </div>
 </header>
-
+ 
 <div class="tab-bar" id="tabBar">
   <div class="tab active" id="tab-parent" onclick="switchTab('parent')">Sign Up to Help</div>
   <div class="tab" id="tab-admin" style="display:none" onclick="switchTab('admin')">Admin Dashboard</div>
 </div>
-
+ 
 <!-- PARENT VIEW -->
 <div id="view-parent" class="main">
-
+ 
   <div class="resource-banner">
     <div class="resource-banner-text">
       <strong>📦 Helpful Resources</strong>
@@ -242,11 +241,11 @@
       </a>
     </div>
   </div>
-
+ 
   <div class="event-filter" id="eventFilter"></div>
   <div id="daysList"></div>
 </div>
-
+ 
 <!-- ADMIN GATE -->
 <div id="view-adminGate" class="main" style="display:none">
   <div class="passcode-screen">
@@ -259,7 +258,7 @@
     <p style="margin-top:20px;font-size:12px;color:var(--text-light)">Contact your school coordinator for access.</p>
   </div>
 </div>
-
+ 
 <!-- ADMIN VIEW -->
 <div id="view-admin" class="main" style="display:none">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px;">
@@ -270,7 +269,7 @@
     <button class="btn-export" onclick="exportToXlsx()">⬇ Export Signups (.xlsx)</button>
   </div>
   <div class="stats-bar" id="statsBar"></div>
-
+ 
   <!-- Passcode change -->
   <div class="admin-section">
     <div class="section-head"><h2>🔐 Admin Passcode</h2></div>
@@ -283,7 +282,7 @@
       </div>
     </div>
   </div>
-
+ 
   <!-- Donation signups -->
   <div class="admin-section">
     <div class="section-head"><h2>🛒 Donation Signups</h2><button class="btn-add-manual" onclick="openManualModal()">+ Add Manual Entry</button></div>
@@ -291,7 +290,7 @@
       <table class="items-table"><thead><tr><th>Name</th><th>Email</th><th>Item</th><th>Day</th><th>Notes</th><th></th></tr></thead><tbody id="donationSignupsBody"></tbody></table>
     </div>
   </div>
-
+ 
   <!-- Volunteer signups -->
   <div class="admin-section">
     <div class="section-head"><h2>🌸 Volunteer Signups</h2></div>
@@ -299,7 +298,7 @@
       <table class="items-table"><thead><tr><th>Name</th><th>Email</th><th>Role</th></tr></thead><tbody id="volunteerSignupsBody"></tbody></table>
     </div>
   </div>
-
+ 
   <!-- Item fill rates -->
   <div class="admin-section">
     <div class="section-head"><h2>📊 Donation Item Status</h2></div>
@@ -308,7 +307,7 @@
     </div>
   </div>
 </div>
-
+ 
 <!-- Claim Modal -->
 <div class="modal-bg" id="claimModal">
   <div class="modal">
@@ -324,7 +323,7 @@
     </div>
   </div>
 </div>
-
+ 
 <!-- Volunteer Modal -->
 <div class="modal-bg" id="volModal">
   <div class="modal">
@@ -339,7 +338,7 @@
     </div>
   </div>
 </div>
-
+ 
 <!-- Manual Override Modal -->
 <div class="modal-bg" id="manualModal">
   <div class="modal">
@@ -363,13 +362,13 @@
     </div>
   </div>
 </div>
-
+ 
 <div class="toast" id="toast"></div>
-
+ 
 <script>
 // ── DEFAULT PASSCODE (change via admin panel) ──
 const DEFAULT_PASSCODE = 'merryhill2025';
-
+ 
 const DAYS = [
   {
     id: 'mon', emoji: '☕', name: 'Cosmic Coffee Breakfast', date: 'Monday, May 4, 2026',
@@ -414,7 +413,7 @@ const DAYS = [
     desc: 'Each staff member will receive a goodie bag filled with treats! Stop by the round couch anytime during the week to drop gift cards and small treats into labeled tote bags — these will be delivered Friday afternoon. Large or heavy items are best given directly to the staff member. Want to contribute cash? Drop it at the front desk and it\'ll be used to "back fill" bags so every staff member gets something special! 🚀'
   }
 ];
-
+ 
 // Pre-seeded from existing Google Form responses (imported 4/23/2025)
 const SEEDED_DONATIONS = [
   // MONDAY
@@ -451,13 +450,13 @@ const SEEDED_DONATIONS = [
   {id:'s29', name:'Rebecca Rabovsky', email:'Rebecca.rabovsky@gmail.com', dayId:'wed', itemName:'Orbit Gum 🌍', notes:'12 pack', ts:0, seeded:true},
   {id:'s30', name:'Sophia Manuel', email:'asgee10@gmail.com', dayId:'wed', itemName:'Gummy Worms (Space Worms) 🪱', notes:'4 bags gummy worms', ts:0, seeded:true},
 ];
-
+ 
 let state = {
   passcode: DEFAULT_PASSCODE,
   donationSignups: [],
   volunteerSignups: [],
 };
-
+ 
 function loadState() {
   try {
     const s = localStorage.getItem('merryhillState');
@@ -470,22 +469,22 @@ function loadState() {
   });
   render();
 }
-
+ 
 function saveState() {
   try { localStorage.setItem('merryhillState', JSON.stringify(state)); } catch(e) {}
 }
-
+ 
 let activeDay = 'all';
 let claimCtx = null; // { type:'donation'|'volunteer', dayId, itemName?, roleId?, roleName?, time? }
 let adminUnlocked = false;
-
+ 
 // ── RENDER ──
 function render() {
   renderStars();
   renderParent();
   if (adminUnlocked) renderAdmin();
 }
-
+ 
 function renderStars() {
   const c = document.getElementById('starsEl');
   if (c.children.length) return;
@@ -497,7 +496,7 @@ function renderStars() {
     c.appendChild(d);
   }
 }
-
+ 
 function renderParent() {
   // Pills
   const ef = document.getElementById('eventFilter');
@@ -510,7 +509,7 @@ function renderParent() {
     p.onclick = ()=>{ activeDay=d.id; renderParent(); };
     ef.appendChild(p);
   });
-
+ 
   // Days
   const dl = document.getElementById('daysList');
   dl.innerHTML = '';
@@ -518,16 +517,16 @@ function renderParent() {
   toShow.forEach(day => {
     const sec = document.createElement('div');
     sec.className = 'day-section';
-
+ 
     const hdr = document.createElement('div');
     hdr.className = 'day-header';
     hdr.innerHTML = `<div class="day-emoji">${day.emoji}</div><div><div class="day-title">${day.name}</div><div class="day-subtitle">${day.date}</div></div>`;
     sec.appendChild(hdr);
-
+ 
     const body = document.createElement('div');
     body.className = 'day-body';
     body.innerHTML = `<p class="day-desc">${day.desc}</p>`;
-
+ 
     if (day.type === 'donation') {
       const grid = document.createElement('div');
       grid.className = 'items-grid';
@@ -548,7 +547,7 @@ function renderParent() {
       });
       body.appendChild(grid);
     }
-
+ 
     if (day.type === 'flowers_and_volunteers') {
       // Flowers
       const fd = document.createElement('div');
@@ -574,7 +573,7 @@ function renderParent() {
       });
       fd.appendChild(fg);
       body.appendChild(fd);
-
+ 
       // Volunteers
       const vd = document.createElement('div');
       vd.innerHTML = '<div class="section-divider">🙋 Volunteer Slots</div>';
@@ -596,7 +595,7 @@ function renderParent() {
       vd.appendChild(vg);
       body.appendChild(vd);
     }
-
+ 
     if (day.type === 'info') {
       const info = document.createElement('div');
       info.className = 'info-day';
@@ -604,12 +603,12 @@ function renderParent() {
       body.innerHTML = '';
       body.appendChild(info);
     }
-
+ 
     sec.appendChild(body);
     dl.appendChild(sec);
   });
 }
-
+ 
 function renderAdmin() {
   const totalDon = state.donationSignups.length;
   const totalVol = state.volunteerSignups.length;
@@ -622,7 +621,7 @@ function renderAdmin() {
     <div class="stat-box"><div class="num">${totalVol}</div><div class="lbl">Volunteers</div></div>
     <div class="stat-box"><div class="num">${uniqueParents}</div><div class="lbl">Unique Parents</div></div>
     <div class="stat-box"><div class="num">${totalDon+totalVol}</div><div class="lbl">Total Commitments</div></div>`;
-
+ 
   // Donation signups
   const db = document.getElementById('donationSignupsBody');
   db.innerHTML = '';
@@ -638,7 +637,7 @@ function renderAdmin() {
       db.appendChild(tr);
     });
   }
-
+ 
   // Volunteer signups
   const vb = document.getElementById('volunteerSignupsBody');
   vb.innerHTML = '';
@@ -651,7 +650,7 @@ function renderAdmin() {
       vb.appendChild(tr);
     });
   }
-
+ 
   // Item status
   const ib = document.getElementById('itemStatusBody');
   ib.innerHTML = '';
@@ -666,7 +665,7 @@ function renderAdmin() {
     });
   });
 }
-
+ 
 // ── CLAIM / VOLUNTEER ──
 function openClaimFromBtn(btn) {
   const type = btn.dataset.type;
@@ -676,7 +675,7 @@ function openClaimFromBtn(btn) {
     openClaim({ type: 'volunteer', roleId: btn.dataset.roleid, roleName: btn.dataset.rolename, time: btn.dataset.time });
   }
 }
-
+ 
 function openClaim(ctx) {
   claimCtx = ctx;
   if (ctx.type === 'donation') {
@@ -696,7 +695,7 @@ function openClaim(ctx) {
     document.getElementById('volModal').classList.add('open');
   }
 }
-
+ 
 function submitClaim() {
   const name = document.getElementById('claimName').value.trim();
   const email = document.getElementById('claimEmail').value.trim();
@@ -709,7 +708,7 @@ function submitClaim() {
   saveState(); closeModal('claimModal'); render();
   showToast('🎉 Thank you for signing up!');
 }
-
+ 
 function submitVol() {
   const name = document.getElementById('volName').value.trim();
   const email = document.getElementById('volEmail').value.trim();
@@ -721,7 +720,7 @@ function submitVol() {
   saveState(); closeModal('volModal'); render();
   showToast('🌟 Thanks for volunteering!');
 }
-
+ 
 // ── ADMIN GATE ──
 function showAdminGate() {
   if (adminUnlocked) { switchTab('admin'); return; }
@@ -729,7 +728,7 @@ function showAdminGate() {
   document.getElementById('passcodeInput').value = '';
   document.getElementById('passcodeError').style.display = 'none';
 }
-
+ 
 function tryUnlock() {
   const val = document.getElementById('passcodeInput').value;
   if (val === state.passcode) {
@@ -744,14 +743,14 @@ function tryUnlock() {
     document.getElementById('passcodeInput').focus();
   }
 }
-
+ 
 function lockAdmin() {
   adminUnlocked = false;
   document.getElementById('tab-admin').style.display = 'none';
   document.getElementById('headerActions').innerHTML = `<button class="btn-ghost" onclick="showAdminGate()">⚙ Admin</button>`;
   switchTab('parent');
 }
-
+ 
 function changePasscode() {
   const np = document.getElementById('newPasscode').value;
   const cp = document.getElementById('confirmPasscode').value;
@@ -764,7 +763,7 @@ function changePasscode() {
   document.getElementById('confirmPasscode').value = '';
   showToast('✓ Passcode updated successfully');
 }
-
+ 
 // ── NAV ──
 function switchTab(tab) {
   ['parent','adminGate','admin'].forEach(v => {
@@ -776,38 +775,38 @@ function switchTab(tab) {
     if (el) el.className = 'tab'+(t===tab?' active':'');
   });
 }
-
+ 
 function switchView(v) {
   ['parent','adminGate','admin'].forEach(id => {
     document.getElementById('view-'+id).style.display = 'none';
   });
   document.getElementById('view-'+v).style.display = 'block';
 }
-
+ 
 // ── UTILS ──
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-
+ 
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg; t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'), 3200);
 }
-
+ 
 function mkEl(tag, cls, text) {
   const e = document.createElement(tag);
   e.className = cls; e.textContent = text; return e;
 }
-
+ 
 function esc(s) {
   return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
-
+ 
 document.querySelectorAll('.modal-bg').forEach(m => {
   m.addEventListener('click', e => { if(e.target===m) m.classList.remove('open'); });
 });
-
+ 
 loadState();
-
+ 
 // ── MANUAL OVERRIDE ──
 function openManualModal() {
   document.getElementById('manualName').value = '';
@@ -817,7 +816,7 @@ function openManualModal() {
   document.getElementById('manualDay').value = 'mon';
   document.getElementById('manualModal').classList.add('open');
 }
-
+ 
 function submitManual() {
   const name = document.getElementById('manualName').value.trim();
   const email = document.getElementById('manualEmail').value.trim();
@@ -836,7 +835,7 @@ function submitManual() {
   render();
   showToast('✓ Manual entry added');
 }
-
+ 
 function deleteSignup(type, id) {
   if (!confirm('Remove this entry?')) return;
   if (type === 'donation') {
@@ -849,15 +848,15 @@ function deleteSignup(type, id) {
   render();
   showToast('Entry removed');
 }
-
+ 
 // ── XLSX EXPORT ──
 function exportToXlsx() {
   if (!state.donationSignups.length && !state.volunteerSignups.length) {
     showToast('No signups to export yet'); return;
   }
-
+ 
   const wb = XLSX.utils.book_new();
-
+ 
   // Sheet 1: Donation Signups
   const donRows = [['Name', 'Email', 'Item', 'Event', 'Notes', 'Signed Up At']];
   state.donationSignups.forEach(s => {
@@ -872,7 +871,7 @@ function exportToXlsx() {
   const ws1 = XLSX.utils.aoa_to_sheet(donRows);
   ws1['!cols'] = [22,28,28,24,28,20].map(w => ({ wch: w }));
   XLSX.utils.book_append_sheet(wb, ws1, 'Donation Signups');
-
+ 
   // Sheet 2: Volunteer Signups
   const volRows = [['Name', 'Email', 'Role', 'Time', 'Signed Up At']];
   state.volunteerSignups.forEach(s => {
@@ -884,7 +883,7 @@ function exportToXlsx() {
   const ws2 = XLSX.utils.aoa_to_sheet(volRows);
   ws2['!cols'] = [22,28,28,18,20].map(w => ({ wch: w }));
   XLSX.utils.book_append_sheet(wb, ws2, 'Volunteer Signups');
-
+ 
   // Sheet 3: Item Status Summary
   const statusRows = [['Item', 'Event', 'Total Signups']];
   DAYS.forEach(day => {
@@ -898,7 +897,7 @@ function exportToXlsx() {
   const ws3 = XLSX.utils.aoa_to_sheet(statusRows);
   ws3['!cols'] = [30,24,16].map(w => ({ wch: w }));
   XLSX.utils.book_append_sheet(wb, ws3, 'Item Status');
-
+ 
   // Sheet 4: Email Draft
   const zeroMon = ['Fruit','Juice'].filter(item =>
     !state.donationSignups.some(s => s.dayId==='mon' && s.itemName===item)
@@ -917,28 +916,28 @@ function exportToXlsx() {
   const wedSection = zeroWed.length
     ? `Still needed: ${zeroWed.map(i=>i.replace(/[\u{1F300}-\u{1FFFF}]/gu,'').trim()).join(', ')} — ${zeroWed.length} item${zeroWed.length>1?'s':''} with no signups yet!`
     : 'Wednesday snack bar is fully covered — amazing!';
-
+ 
   const emailDraft = `Subject: Teacher Appreciation Week — We Still Need Your Help! 🚀
-
+ 
 Hi Merryhill Families,
-
+ 
 Thank you to everyone who has already signed up — we have great coverage on bagels, danishes, muffins, and gummy worms! However, we still have several gaps and would love your help filling them.
-
+ 
 🌅 MONDAY BREAKFAST (drop off by 8:30AM, May 4)
 ${monSection}
-
+ 
 🌸 TUESDAY FLOWER ARRANGEMENTS (7:45–8:30AM, May 5)
 ${volSection}
-
+ 
 🍬 WEDNESDAY SNACK BAR (drop off by 6PM Tuesday, May 5)
 ${wedSection}
-
+ 
 Sign up here: merryhill.netlify.app
-
+ 
 Thank you for helping make this week so special for our incredible staff! 💛
-
+ 
 — The Teacher Appreciation Committee`;
-
+ 
   const ws4 = XLSX.utils.aoa_to_sheet([
     ['INSTRUCTIONS: Click the cell below, then copy the full text and paste into your email client.'],
     [''],
@@ -948,11 +947,11 @@ Thank you for helping make this week so special for our incredible staff! 💛
   ws4['!rows'] = [{},{},{ hpt: 300 }];
   ws4['!cols'] = [{ wch: 90 }];
   XLSX.utils.book_append_sheet(wb, ws4, 'Email Draft');
-
+ 
   const date = new Date().toISOString().slice(0,10);
   XLSX.writeFile(wb, 'Merryhill-Appreciation-Signups-' + date + '.xlsx');
   showToast('✓ Export downloaded!');
-
+ 
 }
 </script>
 </body>
