@@ -534,13 +534,17 @@ function renderParent() {
         const count = state.donationSignups.filter(s=>s.dayId===day.id && s.itemName===itemName).length;
         const card = document.createElement('div');
         card.className = 'item-card';
+        const safeItem = esc(itemName);
+        const needsHelp = count === 0;
+        card.className = 'item-card' + (needsHelp ? ' needs-help' : '');
+        const commitHTML = count === 0
+          ? '<div class="commitment-count zero">No one yet — be the first! 👋</div>'
+          : `<div class="commitment-count">${count} parent${count>1?'s':''} signed up</div>`;
         card.innerHTML = `
+          ${needsHelp ? '<div class="needs-help-badge">⚠ Still needed!</div>' : ''}
           <div class="item-name">${esc(itemName)}</div>
-          <div class="progress-wrap">
-            <div class="progress-label"><span>${count} signed up</span></div>
-            <div class="progress-bar"><div class="progress-fill${count>0?' done':''}" style="width:${Math.min(count/5,1)*100}%"></div></div>
-          </div>
-          <button class="btn-claim" onclick="openClaim({type:'donation',dayId:'${day.id}',itemName:${JSON.stringify(itemName)}})">
+          ${commitHTML}
+          <button class="btn-claim" data-type="donation" data-dayid="${day.id}" data-item="${safeItem}" onclick="openClaimFromBtn(this)">
             I'll Bring This!
           </button>`;
         grid.appendChild(card);
@@ -586,8 +590,8 @@ function renderParent() {
         card.className = 'vol-card'+(isFull?' full':'');
         card.innerHTML = `
           <div class="vol-role">${esc(role.role)}</div>
-          <div class="vol-time">⏰ ${role.time} · ${count}/${role.slots} signed up</div>
-          <button class="btn-claim" ${isFull?'disabled':''} onclick="openClaim({type:'volunteer',roleId:'${role.id}',roleName:${JSON.stringify(role.role)},time:${JSON.stringify(role.time)}})">
+          <div class="vol-time">⏰ ${esc(role.time)} · ${count}/${role.slots} signed up</div>
+          <button class="btn-claim" ${isFull?'disabled':''} data-type="volunteer" data-roleid="${role.id}" data-rolename="${esc(role.role)}" data-time="${esc(role.time)}" onclick="openClaimFromBtn(this)">
             ${isFull ? '✓ Full' : 'Volunteer!'}
           </button>`;
         vg.appendChild(card);
