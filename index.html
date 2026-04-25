@@ -160,6 +160,12 @@
   .btn-export { display: inline-flex; align-items: center; gap: 7px; padding: 9px 20px; border-radius: 22px; border: none; background: #27ae60; color: white; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
   .btn-export:hover { background: #219653; }
   .section-divider { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-light); margin: 20px 0 10px; }
+  /* ADMIN OVERRIDE */
+  .btn-add-manual { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 18px; border: 1.5px solid var(--nebula); background: white; color: var(--nebula); font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.18s; }
+  .btn-add-manual:hover { background: var(--nebula); color: white; }
+  .btn-del-signup { background: none; border: none; color: var(--text-light); font-size: 15px; cursor: pointer; padding: 2px 6px; transition: color 0.2s; }
+  .btn-del-signup:hover { color: #c0392b; }
+  .manual-badge { display: inline-block; background: #fff3cd; color: #856404; border: 1px solid #ffd56b; border-radius: 8px; font-size: 10px; font-weight: 700; padding: 1px 6px; margin-left: 4px; }
   /* ZERO SIGNUP HIGHLIGHT */
   .item-card.needs-help { border-color: #f5a623; background: #fffdf5; }
   .item-card.needs-help:hover { border-color: #e8940a; }
@@ -206,7 +212,7 @@
     <div class="school-logo">🚀</div>
     <div class="header-text">
       <h1>Merryhill Midtown — Teacher Appreciation Week</h1>
-      <p>May 4–8, 2025 · Thank a star! 🌟</p>
+      <p>May 4–8, 2026 · Thank a star! 🌟</p>
     </div>
     <div class="header-actions" id="headerActions">
       <button class="btn-ghost" onclick="showAdminGate()">⚙ Admin</button>
@@ -280,9 +286,9 @@
 
   <!-- Donation signups -->
   <div class="admin-section">
-    <div class="section-head"><h2>🛒 Donation Signups</h2></div>
+    <div class="section-head"><h2>🛒 Donation Signups</h2><button class="btn-add-manual" onclick="openManualModal()">+ Add Manual Entry</button></div>
     <div class="admin-table-wrap">
-      <table class="items-table"><thead><tr><th>Name</th><th>Email</th><th>Item</th><th>Day</th><th>Notes</th></tr></thead><tbody id="donationSignupsBody"></tbody></table>
+      <table class="items-table"><thead><tr><th>Name</th><th>Email</th><th>Item</th><th>Day</th><th>Notes</th><th></th></tr></thead><tbody id="donationSignupsBody"></tbody></table>
     </div>
   </div>
 
@@ -311,7 +317,7 @@
     <div class="privacy-note">🔒 Your name and email are only visible to school admins. Other parents only see the count of signups.</div>
     <div class="field"><label>Your Name *</label><input type="text" id="claimName" placeholder="Jane Smith"></div>
     <div class="field"><label>Email Address *</label><input type="email" id="claimEmail" placeholder="jane@email.com"></div>
-    <div class="field" id="claimQtyField" style="display:none"><label>Quantity / Details</label><textarea id="claimNotes" placeholder="e.g. 2 dozen glazed donuts"></textarea></div>
+    <div class="field" id="claimQtyField"><label>Quantity / Details (optional)</label><textarea id="claimNotes" placeholder="e.g. 2 dozen glazed donuts, Costco bag, etc."></textarea></div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeModal('claimModal')">Cancel</button>
       <button class="btn-submit" onclick="submitClaim()">Confirm Sign Up ✓</button>
@@ -334,6 +340,30 @@
   </div>
 </div>
 
+<!-- Manual Override Modal -->
+<div class="modal-bg" id="manualModal">
+  <div class="modal">
+    <h3>Add Manual Entry</h3>
+    <p class="sub">Record an Amazon purchase or off-form donation</p>
+    <div class="privacy-note">📦 Use this for items purchased via the Amazon wish list or dropped off without submitting the form.</div>
+    <div class="field"><label>Name *</label><input type="text" id="manualName" placeholder="e.g. Amazon Purchase or Parent Name"></div>
+    <div class="field"><label>Email (optional)</label><input type="email" id="manualEmail" placeholder="jane@email.com"></div>
+    <div class="field"><label>Event *</label>
+      <select id="manualDay">
+        <option value="mon">Monday — Cosmic Coffee Breakfast</option>
+        <option value="tue">Tuesday — Astro Arrangements (Flowers)</option>
+        <option value="wed">Wednesday — Solar Sweets Snack Bar</option>
+      </select>
+    </div>
+    <div class="field"><label>Item *</label><input type="text" id="manualItem" placeholder="e.g. Gummy Worms (Space Worms) 🪱"></div>
+    <div class="field"><label>Details / Quantity</label><textarea id="manualNotes" placeholder="e.g. 3 bags ordered via Amazon wish list"></textarea></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal('manualModal')">Cancel</button>
+      <button class="btn-submit" onclick="submitManual()">Add Entry ✓</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -342,8 +372,8 @@ const DEFAULT_PASSCODE = 'merryhill2025';
 
 const DAYS = [
   {
-    id: 'mon', emoji: '☕', name: 'Cosmic Coffee Breakfast', date: 'Monday, May 4',
-    desc: 'We\'re hosting breakfast in the lounge for ~55 employees. All quantities welcome — donate as much or as little as you\'d like! Donations must be dropped off in the front office by 8:30AM on Monday, 5/4.',
+    id: 'mon', emoji: '☕', name: 'Cosmic Coffee Breakfast', date: 'Monday, May 4, 2026',
+    desc: 'We\'re hosting breakfast in the lounge for ~55 employees. All quantities welcome — donate as much or as little as you\'d like! Donations must be dropped off in the front office by 8:30AM on Monday, 5/4/26.',
     type: 'donation',
     items: [
       'Donuts','Bagels & Cream Cheese','Danishes / Pastries / Croissants',
@@ -351,7 +381,7 @@ const DAYS = [
     ]
   },
   {
-    id: 'tue', emoji: '🌸', name: 'Astro Arrangements', date: 'Tuesday, May 5',
+    id: 'tue', emoji: '🌸', name: 'Astro Arrangements', date: 'Tuesday, May 5, 2026',
     desc: 'Students will build a floral arrangement for each staff member from 7:45–8:30AM in the gym. We need flower donations and parent volunteers! Florists often discount or donate flowers for school events — mention it when you call. Donations may be dropped off Monday afternoon/evening or Tuesday morning by 7:45AM.',
     type: 'flowers_and_volunteers',
     flowerOptions: ['1–2 dozen stems','2–4 dozen stems','4–6 dozen stems'],
@@ -362,8 +392,8 @@ const DAYS = [
     ]
   },
   {
-    id: 'wed', emoji: '🍬', name: 'Solar Sweets Snack Bar', date: 'Wednesday, May 6',
-    desc: 'A themed snack bar in the lounge for ~55 employees! All quantities welcome. Donations must be dropped off in the front office by 6:00PM on Tuesday, 5/5. Some items are available on the Amazon wish list.',
+    id: 'wed', emoji: '🍬', name: 'Solar Sweets Snack Bar', date: 'Wednesday, May 6, 2026',
+    desc: 'A themed snack bar in the lounge for ~55 employees! All quantities welcome. Donations must be dropped off in the front office by 6:00PM on Tuesday, 5/5/26. Some items are available on the Amazon wish list.',
     type: 'donation',
     items: [
       'Milky Way candy 🌌','Starbursts ⭐','Mars Bars 🪐','Cheeseballs (Spaceballs) 🧀',
@@ -374,12 +404,12 @@ const DAYS = [
     ]
   },
   {
-    id: 'thu', emoji: '🌙', name: 'Lunar Lunch', date: 'Thursday, May 7',
+    id: 'thu', emoji: '🌙', name: 'Lunar Lunch', date: 'Thursday, May 7, 2026',
     type: 'info',
     desc: 'Staff will enjoy a catered Lunar Lunch! Donations aren\'t needed for this event, but if you\'d like to contribute, drop cash or a check at the front desk — funds will be used to purchase lunch for our amazing staff. 💛'
   },
   {
-    id: 'fri', emoji: '🎁', name: 'Galactic Goodie Bags', date: 'Friday, May 8',
+    id: 'fri', emoji: '🎁', name: 'Galactic Goodie Bags', date: 'Friday, May 8, 2026',
     type: 'info',
     desc: 'Each staff member will receive a goodie bag filled with treats! Stop by the round couch anytime during the week to drop gift cards and small treats into labeled tote bags — these will be delivered Friday afternoon. Large or heavy items are best given directly to the staff member. Want to contribute cash? Drop it at the front desk and it\'ll be used to "back fill" bags so every staff member gets something special! 🚀'
   }
@@ -534,11 +564,12 @@ function renderParent() {
         const countHTML = count === 0
           ? '<div class="commitment-count zero">No one yet — be the first! 👋</div>'
           : `<div class="commitment-count">${count} parent${count>1?'s':''} signed up</div>`;
+        const safeOpt = esc(opt);
         card.innerHTML = `
           ${needsHelp ? '<div class="needs-help-badge">⚠ Still needed!</div>' : ''}
           <div class="item-name">🌸 ${esc(opt)}</div>
           ${countHTML}
-          <button class="btn-claim" onclick="openClaim({type:'donation',dayId:'tue',itemName:${JSON.stringify(opt)}})">I'll Donate!</button>`;
+          <button class="btn-claim" data-type="donation" data-dayid="tue" data-item="${safeOpt}" onclick="openClaimFromBtn(this)">I'll Donate!</button>`;
         fg.appendChild(card);
       });
       fd.appendChild(fg);
@@ -601,8 +632,9 @@ function renderAdmin() {
     state.donationSignups.forEach(s => {
       const day = DAYS.find(d=>d.id===s.dayId);
       const tagCls = s.dayId==='mon'?'tag-mon':s.dayId==='tue'?'tag-tue':'tag-wed';
+      const manualBadge = s.manual ? '<span class="manual-badge">MANUAL</span>' : (s.seeded ? '<span class="manual-badge" style="background:#e8f4ec;color:#1a7a40;border-color:#a8d5b5">IMPORTED</span>' : '');
       const tr = document.createElement('tr');
-      tr.innerHTML = `<td>${esc(s.name)}</td><td>${esc(s.email)}</td><td>${esc(s.itemName)}</td><td><span class="tag ${tagCls}">${day?day.name:''}</span></td><td style="color:var(--text-mid)">${esc(s.notes||'—')}</td>`;
+      tr.innerHTML = `<td>${esc(s.name)}${manualBadge}</td><td>${esc(s.email||'—')}</td><td>${esc(s.itemName)}</td><td><span class="tag ${tagCls}">${day?day.name:''}</span></td><td style="color:var(--text-mid)">${esc(s.notes||'—')}</td><td><button class="btn-del-signup" onclick="deleteSignup('donation','${s.id}')" title="Remove">🗑</button></td>`;
       db.appendChild(tr);
     });
   }
@@ -636,6 +668,15 @@ function renderAdmin() {
 }
 
 // ── CLAIM / VOLUNTEER ──
+function openClaimFromBtn(btn) {
+  const type = btn.dataset.type;
+  if (type === 'donation') {
+    openClaim({ type: 'donation', dayId: btn.dataset.dayid, itemName: btn.dataset.item });
+  } else {
+    openClaim({ type: 'volunteer', roleId: btn.dataset.roleid, roleName: btn.dataset.rolename, time: btn.dataset.time });
+  }
+}
+
 function openClaim(ctx) {
   claimCtx = ctx;
   if (ctx.type === 'donation') {
@@ -766,6 +807,48 @@ document.querySelectorAll('.modal-bg').forEach(m => {
 });
 
 loadState();
+
+// ── MANUAL OVERRIDE ──
+function openManualModal() {
+  document.getElementById('manualName').value = '';
+  document.getElementById('manualEmail').value = '';
+  document.getElementById('manualItem').value = '';
+  document.getElementById('manualNotes').value = '';
+  document.getElementById('manualDay').value = 'mon';
+  document.getElementById('manualModal').classList.add('open');
+}
+
+function submitManual() {
+  const name = document.getElementById('manualName').value.trim();
+  const email = document.getElementById('manualEmail').value.trim();
+  const dayId = document.getElementById('manualDay').value;
+  const itemName = document.getElementById('manualItem').value.trim();
+  const notes = document.getElementById('manualNotes').value.trim();
+  if (!name || !itemName) { showToast('Name and Item are required'); return; }
+  state.donationSignups.push({
+    id: 'm' + Date.now(),
+    name, email, dayId, itemName, notes,
+    ts: Date.now(), manual: true
+  });
+  saveState();
+  closeModal('manualModal');
+  renderAdmin();
+  render();
+  showToast('✓ Manual entry added');
+}
+
+function deleteSignup(type, id) {
+  if (!confirm('Remove this entry?')) return;
+  if (type === 'donation') {
+    state.donationSignups = state.donationSignups.filter(s => s.id !== id);
+  } else {
+    state.volunteerSignups = state.volunteerSignups.filter(s => s.id !== id);
+  }
+  saveState();
+  renderAdmin();
+  render();
+  showToast('Entry removed');
+}
 
 // ── XLSX EXPORT ──
 function exportToXlsx() {
