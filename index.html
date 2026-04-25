@@ -541,7 +541,6 @@ function renderParent() {
           ? '<div class="commitment-count zero">No one yet — be the first! 👋</div>'
           : `<div class="commitment-count">${count} parent${count>1?'s':''} signed up</div>`;
         card.innerHTML = `
-          ${needsHelp ? '<div class="needs-help-badge">⚠ Still needed!</div>' : ''}
           <div class="item-name">${esc(itemName)}</div>
           ${commitHTML}
           <button class="btn-claim" data-type="donation" data-dayid="${day.id}" data-item="${safeItem}" onclick="openClaimFromBtn(this)">
@@ -569,7 +568,6 @@ function renderParent() {
           : `<div class="commitment-count">${count} parent${count>1?'s':''} signed up</div>`;
         const safeOpt = esc(opt);
         card.innerHTML = `
-          ${needsHelp ? '<div class="needs-help-badge">⚠ Still needed!</div>' : ''}
           <div class="item-name">🌸 ${esc(opt)}</div>
           ${countHTML}
           <button class="btn-claim" data-type="donation" data-dayid="tue" data-item="${safeOpt}" onclick="openClaimFromBtn(this)">I'll Donate!</button>`;
