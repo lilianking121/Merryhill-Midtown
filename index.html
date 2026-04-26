@@ -792,7 +792,9 @@ async function submitClaim() {
   if (!email.includes('@')) { showToast('Please enter a valid email'); return; }
   const dup = state.donationSignups.find(s=>s.email.toLowerCase()===email.toLowerCase()&&s.itemName===claimCtx.itemName&&s.dayId===claimCtx.dayId);
   if (dup) { showToast("You've already signed up for this item!"); closeModal('claimModal'); return; }
-  state.donationSignups.push({ id:'d'+Date.now(), name, email, itemName: claimCtx.itemName, dayId: claimCtx.dayId, notes, ts: Date.now() });
+  const newSignup = { id:'d'+Date.now(), name, email, itemName: claimCtx.itemName, dayId: claimCtx.dayId, notes, ts: Date.now() };
+  state.donationSignups.push(newSignup);
+  await saveSignup('donation', newSignup);
   saveState(); closeModal('claimModal'); render();
   showToast('🎉 Thank you for signing up!');
 }
@@ -804,7 +806,9 @@ async function submitVol() {
   if (!email.includes('@')) { showToast('Please enter a valid email'); return; }
   const dup = state.volunteerSignups.find(s=>s.email.toLowerCase()===email.toLowerCase()&&s.roleId===claimCtx.roleId);
   if (dup) { showToast("You've already signed up for this slot!"); closeModal('volModal'); return; }
-  state.volunteerSignups.push({ id:'v'+Date.now(), name, email, roleId: claimCtx.roleId, roleName: claimCtx.roleName, ts: Date.now() });
+  const newVol = { id:'v'+Date.now(), name, email, roleId: claimCtx.roleId, roleName: claimCtx.roleName, time: claimCtx.time, ts: Date.now() };
+  state.volunteerSignups.push(newVol);
+  await saveSignup('volunteer', newVol);
   saveState(); closeModal('volModal'); render();
   showToast('🌟 Thanks for volunteering!');
 }
