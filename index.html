@@ -6,6 +6,7 @@
 <title>Merryhill Teacher Appreciation Week</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   :root {
     --space: #1a1a2e;
@@ -369,6 +370,11 @@
 // ── DEFAULT PASSCODE (change via admin panel) ──
 const DEFAULT_PASSCODE = 'merryhill2025';
  
+// ── SUPABASE CONFIG ──
+const SUPABASE_URL = 'https://gxvyymoysqpfhqdqwcdc.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_Tpq6Bkn_XxbXvph2FHBgeQ_8p2NDWeg';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+ 
 const DAYS = [
   {
     id: 'mon', emoji: '☕', name: 'Cosmic Coffee Breakfast', date: 'Monday, May 4, 2026',
@@ -457,21 +463,88 @@ let state = {
   volunteerSignups: [],
 };
  
-function loadState() {
+async function loadState() {
+  // Load passcode from localStorage
   try {
-    const s = localStorage.getItem('merryhillState');
-    if (s) state = JSON.parse(s);
+    const saved = localStorage.getItem('merryhillPasscode');
+    if (saved) state.passcode = saved;
   } catch(e) {}
-  // Merge seeded signups — add any not already present (by id)
-  const existingIds = new Set(state.donationSignups.map(s => s.id));
-  SEEDED_DONATIONS.forEach(sd => {
-    if (!existingIds.has(sd.id)) state.donationSignups.push(sd);
-  });
+ 
+  // Load signups from Supabase
+  try {
+    const [{ data: donations }, { data: volunteers }] = await Promise.all([
+      sb.from('donation_signups').select('*'),
+      sb.from('volunteer_signups').select('*')
+    ]);
+ 
+    // Map snake_case DB columns to camelCase
+    state.donationSignups = (donations || []).map(r => ({
+      id: r.id, name: r.name, email: r.email,
+      dayId: r.day_id, itemName: r.item_name,
+      notes: r.notes, ts: r.ts,
+      seeded: r.seeded, manual: r.manual
+    }));
+    state.volunteerSignups = (volunteers || []).map(r => ({
+      id: r.id, name: r.name, email: r.email,
+      roleId: r.role_id, roleName: r.role_name,
+      time: r.time, ts: r.ts
+    }));
+ 
+    // Seed initial data if DB is empty
+    if (state.donationSignups.length === 0) {
+      await seedInitialData();
+    }
+  } catch(e) {
+    console.error('Supabase load error:', e);
+  }
+ 
   render();
 }
  
+async function seedInitialData() {
+  const rows = SEEDED_DONATIONS.map(s => ({
+    id: s.id, name: s.name, email: s.email,
+    day_id: s.dayId, item_name: s.itemName,
+    notes: s.notes, ts: s.ts,
+    seeded: true, manual: false
+  }));
+  const { error } = await sb.from('donation_signups').insert(rows);
+  if (!error) {
+    state.donationSignups = SEEDED_DONATIONS;
+    console.log('Seeded initial data');
+  } else {
+    console.error('Seed error:', error);
+  }
+}
+ 
 function saveState() {
-  try { localStorage.setItem('merryhillState', JSON.stringify(state)); } catch(e) {}
+  // Only save passcode to localStorage
+  try { localStorage.setItem('merryhillPasscode', state.passcode); } catch(e) {}
+}
+ 
+async function saveSignup(type, signup) {
+  if (type === 'donation') {
+    const { error } = await sb.from('donation_signups').insert({
+      id: signup.id, name: signup.name, email: signup.email || '',
+      day_id: signup.dayId, item_name: signup.itemName,
+      notes: signup.notes || '', ts: signup.ts,
+      seeded: signup.seeded || false, manual: signup.manual || false
+    });
+    if (error) console.error('Save error:', error);
+  } else {
+    const { error } = await sb.from('volunteer_signups').insert({
+      id: signup.id, name: signup.name, email: signup.email || '',
+      role_id: signup.roleId, role_name: signup.roleName,
+      time: signup.time || '', ts: signup.ts
+    });
+    if (error) console.error('Save error:', error);
+  }
+}
+ 
+async function deleteSignupFromDB(type, id) {
+  const table = type === 'donation' ? 'donation_signups' : 'volunteer_signups';
+  const { error } = await sb.from(table).delete().eq('id', id);
+  if (error) console.error('Delete error:', error);
 }
  
 let activeDay = 'all';
@@ -698,7 +771,7 @@ function openClaim(ctx) {
   }
 }
  
-function submitClaim() {
+async function submitClaim() {
   const name = document.getElementById('claimName').value.trim();
   const email = document.getElementById('claimEmail').value.trim();
   const notes = document.getElementById('claimNotes').value.trim();
@@ -711,7 +784,7 @@ function submitClaim() {
   showToast('🎉 Thank you for signing up!');
 }
  
-function submitVol() {
+async function submitVol() {
   const name = document.getElementById('volName').value.trim();
   const email = document.getElementById('volEmail').value.trim();
   if (!name || !email) { showToast('Please enter your name and email'); return; }
@@ -760,7 +833,7 @@ function changePasscode() {
   if (np !== cp) { showToast('Passcodes do not match'); return; }
   if (np.length < 6) { showToast('Passcode must be at least 6 characters'); return; }
   state.passcode = np;
-  saveState();
+  try { localStorage.setItem('merryhillPasscode', np); } catch(e) {}
   document.getElementById('newPasscode').value = '';
   document.getElementById('confirmPasscode').value = '';
   showToast('✓ Passcode updated successfully');
@@ -819,33 +892,30 @@ function openManualModal() {
   document.getElementById('manualModal').classList.add('open');
 }
  
-function submitManual() {
+async function submitManual() {
   const name = document.getElementById('manualName').value.trim();
   const email = document.getElementById('manualEmail').value.trim();
   const dayId = document.getElementById('manualDay').value;
   const itemName = document.getElementById('manualItem').value.trim();
   const notes = document.getElementById('manualNotes').value.trim();
   if (!name || !itemName) { showToast('Name and Item are required'); return; }
-  state.donationSignups.push({
-    id: 'm' + Date.now(),
-    name, email, dayId, itemName, notes,
-    ts: Date.now(), manual: true
-  });
-  saveState();
+  const newManual = { id: 'm' + Date.now(), name, email, dayId, itemName, notes, ts: Date.now(), manual: true };
+  state.donationSignups.push(newManual);
+  await saveSignup('donation', newManual);
   closeModal('manualModal');
   renderAdmin();
   render();
   showToast('✓ Manual entry added');
 }
  
-function deleteSignup(type, id) {
+async function deleteSignup(type, id) {
   if (!confirm('Remove this entry?')) return;
   if (type === 'donation') {
     state.donationSignups = state.donationSignups.filter(s => s.id !== id);
   } else {
     state.volunteerSignups = state.volunteerSignups.filter(s => s.id !== id);
   }
-  saveState();
+  await deleteSignupFromDB(type, id);
   renderAdmin();
   render();
   showToast('Entry removed');
